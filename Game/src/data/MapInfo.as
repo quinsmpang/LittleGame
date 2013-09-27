@@ -1,27 +1,27 @@
 package data
 {
-	import flash.display.Bitmap;
-	
-	import starling.display.DisplayObject;
-	import starling.display.DisplayObjectContainer;
-	
+	import data.event.MapInfoUpdateEvent;
 
-	public class MapInfo extends DisplayObjectContainer
+	public class MapInfo extends ObjectInfo
 	{
 		public var ID:int;
 		public var path:String;
-		public var mapInfo:Bitmap;
+		public var mapID:int;
 		public var objects:Vector.<ObjectInfo>
+		public static const WIDTH:int = 1600; 
+		public static const HEIGHT:int = 1200;
+		public var cameraX:int;
+		public var cameraY:int;
 		
 		public function MapInfo()
 		{
+			super();
 			objects = new Vector.<ObjectInfo>;
 		}
 		
 		public function pushObject(info:ObjectInfo):void
 		{
 			objects.push(info);
-			addChild(info);
 		}
 		
 		public function popObject(info:ObjectInfo):Boolean
@@ -37,6 +37,13 @@ package data
 			{
 				return false;
 			}
+		}
+		
+		public function cameraMove(offestX:int,offestY:int):void
+		{
+			cameraX += offestX;
+			cameraY += offestY;
+			dispatchEvent(new MapInfoUpdateEvent(MapInfoUpdateEvent.UPDATE));
 		}
 		
 	}

@@ -7,7 +7,7 @@ package Loader
 	
 	import starling.core.Starling;
 	
-	[SWF(width="1280", height="640", frameRate="60", backgroundColor="#002143")] 
+	[SWF(width="800", height="600", frameRate="60", backgroundColor="#002143")] 
 	public class StartUp extends Sprite
 	{
 		private var myStarling:Starling
@@ -38,7 +38,7 @@ package Loader
 		
 		private function start():void
 		{
-			myStarling = new Starling(Loader,stage);
+			myStarling = new Starling(GameLoader,stage);
 			myStarling.antiAliasing = 1;
 			myStarling.enableErrorChecking = true;
 			myStarling.start();

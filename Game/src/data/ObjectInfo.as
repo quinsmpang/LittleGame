@@ -1,19 +1,12 @@
 package data
 {
-	import flash.display.DisplayObjectContainer;
-
-	public class ObjectInfo extends DisplayObjectContainer
+	import starling.events.EventDispatcher;
+	
+	public class ObjectInfo extends EventDispatcher
 	{
 		public function ObjectInfo()
 		{
-		}
-		
-		/**
-		 *碰撞处理，所有的objectinfo对象都具有碰撞属性 
-		 * 
-		 */		
-		public function hitTest():void
-		{
+			super();
 		}
 	}
 }
