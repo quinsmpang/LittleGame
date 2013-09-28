@@ -10,7 +10,7 @@ package data
 		public var name:String;
 		public var cd:int;
 		public var skillType:int;
-		public var propertyAffects = {};
+		public var propertyAffects:Object = {};
 		
 		public var sceneX:int;
 		public var sceneY:int;
