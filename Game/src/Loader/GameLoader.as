@@ -4,9 +4,6 @@ package Loader
 	import data.MapInfo;
 	import data.RoleInfo;
 	
-	import flash.ui.Mouse;
-	
-	import renderer.MapLayer;
 	import renderer.MapRenderer;
 	import renderer.RoleRenderer;
 	
