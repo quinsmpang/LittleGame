@@ -1,13 +1,11 @@
 package data
 {
-	import data.event.MapInfoUpdateEvent;
-	
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import data.event.MapInfoUpdateEvent;
 	
 	import starling.animation.IAnimatable;
 	import starling.core.Starling;
-	import starling.utils.RectangleUtil;
 
 	/**
 	 * 地图信息类<br>
