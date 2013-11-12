@@ -1,10 +1,9 @@
 package renderer
 {
-	import data.RoleInfo;
-	import data.constType.KeyType;
-	import data.event.RoleInfoUpdateEvent;
-	
 	import flash.display.BitmapData;
+	
+	import data.RoleInfo;
+	import data.event.RoleInfoUpdateEvent;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -66,30 +65,6 @@ package renderer
 		
 		protected function onMove(e:KeyboardEvent):void
 		{
-			if(roleInfo.palyer == 1)
-			{
-				switch(e.keyCode)
-				{
-					case KeyType.A:
-						roleInfo.vx = -100;
-						break;
-					case KeyType.D:
-						roleInfo.vx = 100;
-						break;
-				}
-			}
-			else if(roleInfo.palyer ==2)
-			{
-				switch(e.keyCode)
-				{
-					case KeyType.LEFT:
-						roleInfo.vx = -100;
-						break;
-					case KeyType.RIGHT:
-						roleInfo.vx = 100;
-						break;
-				}
-			}
 		}
 	}
 }
