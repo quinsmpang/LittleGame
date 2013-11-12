@@ -22,5 +22,10 @@ package renderer
 		{
 			
 		}
+		
+		public function start():void
+		{
+			
+		}
 	}
 }

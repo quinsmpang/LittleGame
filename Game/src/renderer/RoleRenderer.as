@@ -5,9 +5,7 @@ package renderer
 	import data.RoleInfo;
 	import data.event.RoleInfoUpdateEvent;
 	
-	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.events.KeyboardEvent;
 	import starling.textures.Texture;
 
 	/**
@@ -28,6 +26,7 @@ package renderer
 		override public function renderInfos():void
 		{
 			super.renderInfos();
+			
 			x = roleInfo.sceneX;
 			y = roleInfo.sceneY;
 		}
@@ -46,25 +45,27 @@ package renderer
 		
 		public function initRenderer():void
 		{
-			roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
-			Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN,onMove);
-			Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP,onStop);
-			
 			if(roleImage == null)
 			{
 				var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
 				roleImage = new Image(texture);
+				roleImage.pivotX = roleInfo.body.width >> 1;
+				roleImage.pivotY = roleInfo.body.height >> 1;
+				roleImage.x -= roleInfo.body.width << 1;
+				roleImage.y -= roleInfo.body.height << 1;
 				addChild(roleImage);
 			}
 		}
 		
-		protected function onStop(e:KeyboardEvent):void
+		override public function start():void
 		{
-			roleInfo.vx = roleInfo.vy = 0;
+			roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
 		}
 		
-		protected function onMove(e:KeyboardEvent):void
+		override public function stop():void
 		{
+			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
 		}
+		
 	}
 }
