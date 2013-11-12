@@ -1,6 +1,8 @@
 package compoments
 {
 	import flash.geom.Rectangle;
+	
+	import data.ObjectInfo;
 
 	/**
 	 *具有物理属性的一个盒子 
@@ -9,6 +11,8 @@ package compoments
 	 */	
 	public class Box2D
 	{
+		private var _parent:ObjectInfo
+		
 		/**
 		 *躯体，用做碰撞检测 
 		 */		
@@ -21,13 +25,28 @@ package compoments
 		public var vy:Number;
 		public var ax:Number;
 		public var ay:Number;
+		public var x:Number;
+		public var y:Number;
 		
 		public function Box2D()
 		{
-			body = new Rectangle(height , width);
+			body = new Rectangle();
 		}
 		
-		
+		public function get parent():ObjectInfo
+		{
+			return _parent;
+		}
+		/**
+		 *Box2D的显示对象载体 
+		 * @param value
+		 * 
+		 */		
+		public function set parent(value:ObjectInfo):void
+		{
+			_parent = value;
+		}
+
 		public function get width():Number
 		{
 			return body.width;
