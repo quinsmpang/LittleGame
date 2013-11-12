@@ -1,9 +1,11 @@
 package data
 {
-	import data.event.RoleInfoUpdateEvent;
-	
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import compoments.Box2D;
+	
+	import data.action.IActionRenderer;
+	import data.event.RoleInfoUpdateEvent;
 
 	/**
 	 * 基础人物信息类<br>
@@ -14,28 +16,18 @@ package data
 	 */
 	public class BaseCharacterInfo extends ObjectInfo
 	{
-		//场景坐标 （相对相机）
-		public var sceneX:Number = 0;
-		public var sceneY:Number = 0;
 		//人物速度
 		public var vx:Number = 0;
 		public var vy:Number = 0;
 		//加载info的相机
 		public var camera:Rectangle;
 		
-		public var roleType:int;
-		public var palyerName:String;
-		//玩家几
-		public var palyer:int
-		
-		public var skillNum:int;
-		public var skills:Vector.<BaseSkillInfo>;
-		
 		public var hp:int;
 		
 		public var actioning:IActionRenderer;
+		public var isJump:Boolean;
 		
-		public var body:Rectangle;
+		public var body:Box2D;
 		
 		public function BaseCharacterInfo()
 		{
@@ -46,7 +38,7 @@ package data
 		{
 			if(body == null)
 			{
-				body = new Rectangle(0,0,width,height);
+				body = new Box2D();
 			}
 			else
 			{
@@ -54,46 +46,19 @@ package data
 				body.height = height;
 			}
 		}
-		/**
-		 *人物相机内移动 
-		 */		
-		[Inline]
-		final public function cameraMove(time:Number):void
+		
+		public function getAction(action:Class):IActionRenderer
 		{
-			sceneX += vx * time;	
-			sceneY += vy * time;
-			if(camera)
+			if(actioning is action)
 			{
-				body.x = camera.x + sceneX;
-				body.y = camera.y + sceneY;
+				actioning.stop();
 			}
-			if(vx != 0 || vy != 0)
+			else
 			{
-				dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE));
+				actioning.stop();
+				actioning = new action();
 			}
-		}
-		/**
-		 *停止人物移动，并回退上一次的移动 
-		 */		
-		[Inline]
-		final public function stop(time:Number):void
-		{
-			sceneX -= vx * time;
-			sceneY -= vy * time;
-			vx = vy = 0;
-			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE));
-		}
-
-		/**
-		 * 人物实体中心点
-		 * @return 人物实体中心点
-		 * 
-		 */		
-		public function get bodyCenter():Point
-		{
-			var x:Number = sceneX + body.width >> 1;
-			var y:Number = sceneY + body.height >> 1;
-			return new Point(x,y);
+			return actioning;
 		}
 		/**
 		 *设置人物场景坐标 
@@ -107,6 +72,25 @@ package data
 			sceneY = posy;
 			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE));
 		}
-
+		
+		override public function get sceneX():int
+		{
+			return body.x + (body.width >> 1);
+		}
+		
+		override public function set sceneX(value:int):void
+		{
+			body.x = value - (body.width >> 1);
+		}
+		
+		override public function get sceneY():int
+		{
+			return body.y + (body.height >> 1);
+		}
+		
+		override public function set sceneY(value:int):void
+		{
+			body.y = value - (body.height >> 1);
+		}
 	}
 }
