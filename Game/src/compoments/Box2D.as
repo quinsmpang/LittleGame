@@ -47,5 +47,15 @@ package compoments
 		{
 			body.setTo(0,0,width,value);
 		}
+		/**
+		 *与其他盒子碰撞时被调用，传入与自身碰撞的盒子与碰撞区域<br>
+		 * 与多个盒子碰撞会多次调用此方法 
+		 * @param object :Box2D 与自身碰撞的盒子
+		 * @param hitRectangle :Rectangle 碰撞区域
+		 */		
+		public function hitTest(object:Box2D, hitRectangle:Rectangle):void
+		{
+			
+		}
 	}
 }

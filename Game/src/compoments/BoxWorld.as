@@ -1,5 +1,9 @@
 package compoments
 {
+	import flash.geom.Rectangle;
+	
+	import starling.animation.IAnimatable;
+
 	/**
 	 *盒子的世界<br>
 	 * 实现世界内的盒子以及盒子之间的物理效果<br>
@@ -8,7 +12,7 @@ package compoments
 	 * @author yanjinwei
 	 * 
 	 */	
-	public class BoxWorld
+	public class BoxWorld implements IAnimatable
 	{
 		public var boxs:Vector.<Box2D>;
 		
@@ -48,12 +52,40 @@ package compoments
 		 */		
 		public function start():void
 		{
+			CycleTimer.getInstance().juggler.add(this);
 		}
 		/**
 		 * 停止物理环境的模拟
 		 */		
 		public function stop():void
 		{
+			CycleTimer.getInstance().juggler.remove(this);
+		}
+		/**
+		 *对world内所有add的盒子进行碰撞检测 
+		 * @param time
+		 */		
+		public function advanceTime(time:Number):void
+		{
+			for each(var box:Box2D in boxs)
+			{
+				for each(var testBox:Box2D in boxs)
+				{
+					if(box == testBox)
+					{
+						break;
+					}
+					var hitRectangle:Rectangle = box.body.intersection(testBox.body);
+					if(hitRectangle.height ==0 && hitRectangle.width ==0)
+					{
+						break;
+					}
+					else
+					{
+						box.hitTest(testBox,hitRectangle);
+					}
+				}
+			}
 		}
 	}
 }
