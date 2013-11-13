@@ -2,7 +2,7 @@ package renderer
 {
 	import flash.display.BitmapData;
 	
-	import data.RoleInfo;
+	import data.info.RoleInfo;
 	import data.event.RoleInfoUpdateEvent;
 	
 	import starling.display.Image;
@@ -27,8 +27,8 @@ package renderer
 		{
 			super.renderInfos();
 			
-			x = roleInfo.sceneX;
-			y = roleInfo.sceneY;
+			x = roleInfo.pivotX;
+			y = roleInfo.pivotY;
 		}
 		
 		
