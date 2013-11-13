@@ -33,7 +33,13 @@ package data
 		{
 			super();
 		}
-		
+		/**
+		 *设置人物躯体<br>
+		 * 躯体参与碰撞计算 
+		 * @param width
+		 * @param height
+		 * 
+		 */		
 		public function setBoby(width:Number , height:Number):void
 		{
 			if(body == null)
@@ -46,8 +52,12 @@ package data
 				body.height = height;
 			}
 		}
-		
-		public function getAction(action:Class):IActionRenderer
+		/**
+		 * 执行动作
+		 * @param action :Class
+		 * 
+		 */		
+		public function doAction(action:Class):void
 		{
 			if(actioning is action)
 			{
@@ -58,7 +68,21 @@ package data
 				actioning.stop();
 				actioning = new action();
 			}
-			return actioning;
+			
+			actioning.start();
+		}
+		/**
+		 *停止动作 
+		 * @param action :Class
+		 * @return 
+		 * 
+		 */		
+		public function stopAction(action:Class):void
+		{
+			if(actioning is action)
+			{
+				actioning.stop();
+			}
 		}
 		/**
 		 *设置人物场景坐标 
