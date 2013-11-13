@@ -94,7 +94,7 @@ package data
 		{
 			sceneX = posx;
 			sceneY = posy;
-			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE));
+			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE)); 
 		}
 		
 		override public function get sceneX():int
