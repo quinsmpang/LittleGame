@@ -74,25 +74,33 @@ package compoments
 		 */		
 		public function advanceTime(time:Number):void
 		{
-			for each(var box:Box2D in boxs)
+			var len:int = boxs.length;
+			for(var i:int ; i < len ; i++)
 			{
-				for each(var testBox:Box2D in boxs)
+				for(var j:int = len -1 ; j > i ; j--)
 				{
-					if(box == testBox)
-					{
-						break;
-					}
-					var hitRectangle:Rectangle = box.body.intersection(testBox.body);
-					if(hitRectangle.height ==0 && hitRectangle.width ==0)
+					var hitRectangle:Rectangle = boxs[i].body.intersection(boxs[j]);
+					if(hitRectangle.height == 0 && hitRectangle.width == 0)
 					{
 						break;
 					}
 					else
 					{
-						box.hitTest(testBox,hitRectangle);
+						boxs[i].hitTest(boxs[j], hitRectangle);
+						boxs[j].hitTest(boxs[i], hitRectangle);
 					}
+					moveBox(boxs[i]);
 				}
 			}
+		}
+		
+		[Inline]
+		final private function moveBox(box:Box2D):void
+		{
+			box.vx += box.ax;
+			box.vy += box.ay;
+			box.x += box.vx;
+			box.y += box.y + box.vy;
 		}
 		
 		public static function getInstance():BoxWorld2D
