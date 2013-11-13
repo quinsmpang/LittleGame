@@ -2,7 +2,7 @@ package compoments
 {
 	import flash.geom.Rectangle;
 	
-	import data.ObjectInfo;
+	import data.info.hitableObjectInfo;
 
 	/**
 	 *具有物理属性的一个盒子 
@@ -11,7 +11,7 @@ package compoments
 	 */	
 	public class Box2D
 	{
-		private var _parent:ObjectInfo
+		private var _parent:hitableObjectInfo
 		
 		/**
 		 *躯体，用做碰撞检测 
@@ -33,7 +33,7 @@ package compoments
 			body = new Rectangle();
 		}
 		
-		public function get parent():ObjectInfo
+		public function get parent():hitableObjectInfo
 		{
 			return _parent;
 		}
@@ -42,7 +42,7 @@ package compoments
 		 * @param value
 		 * 
 		 */		
-		public function set parent(value:ObjectInfo):void
+		public function set parent(value:hitableObjectInfo):void
 		{
 			_parent = value;
 		}
@@ -74,7 +74,10 @@ package compoments
 		 */		
 		public function hitTest(object:Box2D, hitRectangle:Rectangle):void
 		{
-			
+			if(parent)
+			{
+				parent.hitTest(object, hitRectangle);
+			}
 		}
 	}
 }
