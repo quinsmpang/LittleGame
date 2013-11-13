@@ -1,6 +1,6 @@
 package data.action
 {
-	import data.BaseCharacterInfo;
+	import data.info.BaseCharacterInfo;
 
 	/**
 	 *跳跃 
