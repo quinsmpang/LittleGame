@@ -1,16 +1,39 @@
 package contorller
 {
-	import renderer.RoleRenderer;
+	import data.RoleInfo;
+	import data.action.Jump;
+	import data.action.LeftMove;
+	import data.action.RightMove;
 	
 	import starling.core.Starling;
 	import starling.events.KeyboardEvent;
 
 	public class PlayerContorller
 	{
-		//按键插槽类型索引
-		public static const MOVE:int = 0;
+		/**
+		 *左移动 
+		 */		
+		public static const LEFTMOVE:int = 0;
+		/**
+		 *右移动 
+		 */		
+		public static const RIGHTMOVE:int = 1;
+		/**
+		 *跳 
+		 */		
+		public static const JUMP:int = 2;
+		/**
+		 *蹲 
+		 */		
+		public static const CROUCH:int = 3;
+		/**
+		 *攻击 
+		 */		
 		public static const ATTACT:int = 4;
-		public static const SKILL:int = 5;
+		/**
+		 *技能0 
+		 */		
+		public static const SKILL0:int = 5;
 		/**
 		 *控制器按键插槽 
 		 */		
@@ -18,13 +41,14 @@ package contorller
 		/**
 		 *控制的角色 
 		 */		
-		public var role:RoleRenderer;
+		public var role:RoleInfo;
 		
 		public function PlayerContorller()
 		{
+			keySlot = new Vector.<int>();
 		}
 		
-		public function setController(role:RoleRenderer):void
+		public function setController(role:RoleInfo):void
 		{
 			this.role = role;
 			initkey();
@@ -35,15 +59,63 @@ package contorller
 			Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 		}
-		
-		private function onKeyUp():void
+		/**
+		 *初始化插槽 
+		 * @param keys 快捷键数组
+		 * 
+		 */		
+		public function setKeySlot(keys:Vector.<int>):void
 		{
-			
+			if(keys.length != keySlot.length)
+			{
+				throw Error("初始化快捷键数组长度错误！");
+			}
+			for (var i:int = keys.length - 1 ; i >= 0 ; i --)
+			{
+				keySlot[i] = keys[i];
+			}
+		}
+		/**
+		 *设置单个按键插槽 
+		 * @param keyType 按键code
+		 * @param slot 插槽索引
+		 * 
+		 */		
+		public function setKeySlotAt(keyType:int , slot:int):void
+		{
+			keySlot[slot] = keyType;
 		}
 		
-		private function onKeyDown():void
+		private function onKeyUp(e:KeyboardEvent):void
 		{
-			
+			if(e.keyCode == keySlot[LEFTMOVE])
+			{
+				role.doAction(LeftMove);
+			}
+			else if(e.keyCode == keySlot[RIGHTMOVE])
+			{
+				role.doAction(RightMove);
+			}
+			else if(e.keyCode == keySlot[JUMP])
+			{
+				role.doAction(Jump);
+			}
+		}
+		
+		private function onKeyDown(e:KeyboardEvent):void
+		{
+			if(e.keyCode == keySlot[LEFTMOVE])
+			{
+				role.stopAction(LeftMove);
+			}
+			else if(e.keyCode == keySlot[RIGHTMOVE])
+			{
+				role.stopAction(RightMove);
+			}
+			else if(e.keyCode == keySlot[JUMP])
+			{
+				role.stopAction(Jump);
+			}
 		}
 	}
 }
