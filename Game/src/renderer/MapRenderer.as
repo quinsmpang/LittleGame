@@ -1,17 +1,14 @@
 package renderer
 {
-	import Loader.AssetLoader;
-	
-	import data.MapInfo;
-	import data.constType.KeyType;
-	import data.event.MapInfoUpdateEvent;
-	
 	import flash.display.BitmapData;
 	
-	import starling.core.Starling;
+	import Loader.AssetLoader;
+	
+	import data.event.MapInfoUpdateEvent;
+	import data.info.MapInfo;
+	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.events.KeyboardEvent;
 	import starling.textures.Texture;
 
 	/**
@@ -40,8 +37,6 @@ package renderer
 		
 		public function set mapInfo(info:MapInfo):void
 		{
-			renderInfo = info;
-			initRenderer();
 		}
 		
 		public function initRenderer():void
@@ -53,35 +48,14 @@ package renderer
 				var texture:Texture = Texture.fromBitmapData(new BitmapData(1600,1200));
 				mapImage = new Image(texture);
 			}
-			mapInfo.camera.map = this;
-			mapInfo.cameraMove(MapInfo.HEIGHT >> 2, MapInfo.WIDTH >> 2);
+//			mapInfo.cameraMove(MapInfo.HEIGHT >> 2, MapInfo.WIDTH >> 2);
 			AssetLoader.getloader().maploader(mapInfo.mapID.toString(),mapImage);
 		}
-		
-//		private function onCameraMove(e:KeyboardEvent):void
-//		{
-//			switch(e.keyCode)
-//			{
-//				case KeyType.UP:
-//					mapInfo.cameraMove(0,-10);
-//					break;
-//				case KeyType.DOWN:
-//					mapInfo.cameraMove(0,10);
-//					break;
-//				case KeyType.LEFT:
-//					mapInfo.cameraMove(-10,0);
-//					break;
-//				case KeyType.RIGHT:
-//					mapInfo.cameraMove(10,0);
-//					break;
-//			}
-//		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			if(child is RoleRenderer)
 			{
-				RoleRenderer(child).roleInfo.camera = mapInfo.camera;
 				mapInfo.pushObject( RoleRenderer(child).roleInfo);
 			}
 			return super.addChild(child);
