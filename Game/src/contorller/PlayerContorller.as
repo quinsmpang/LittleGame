@@ -1,6 +1,6 @@
 package contorller
 {
-	import data.RoleInfo;
+	import data.info.RoleInfo;
 	import data.action.Jump;
 	import data.action.LeftMove;
 	import data.action.RightMove;
