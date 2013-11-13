@@ -1,12 +1,12 @@
 package renderer
 {
-	import data.ObjectInfo;
+	import data.info.hitableObjectInfo;
 	
 	import starling.display.DisplayObjectContainer;
 
 	public class BaseRenderer extends DisplayObjectContainer
 	{
-		public var renderInfo:ObjectInfo;
+		public var renderInfo:hitableObjectInfo;
 		
 		public function BaseRenderer()
 		{
