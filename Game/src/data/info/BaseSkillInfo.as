@@ -1,6 +1,6 @@
-package data
+package data.info
 {
-	public class BaseSkillInfo extends ObjectInfo
+	public class BaseSkillInfo extends hitableObjectInfo
 	{
 		public static const ATTACK:int = 1;
 		public static const DEFENSE:int = 2;

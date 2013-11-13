@@ -1,4 +1,4 @@
-package data
+package data.info
 {
 	import flash.geom.Rectangle;
 	
@@ -8,13 +8,13 @@ package data
 	import data.event.RoleInfoUpdateEvent;
 
 	/**
-	 * 基础人物信息类<br>
-	 * 包含人物的显示信息<br>
-	 * @see roleType
+	 * 基础人物图层类<br>
+	 * 具有以下特性
+	 * <li> 组合了box2D实现人物之间的碰撞检测</li>
+	 * <li> 对外接口表现为一个人物的图层信息</li>
 	 * @author yanjinwei
-	 * 
 	 */
-	public class BaseCharacterInfo extends ObjectInfo
+	public class BaseCharacterInfo extends hitableObjectInfo
 	{
 		//人物速度
 		public var vx:Number = 0;
@@ -92,27 +92,27 @@ package data
 		 */		
 		public function setScenePos(posx:Number,posy:Number):void
 		{
-			sceneX = posx;
-			sceneY = posy;
+			pivotX = posx;
+			pivotY = posy;
 			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE)); 
 		}
 		
-		override public function get sceneX():int
+		public function get pivotX():Number
 		{
 			return body.x + (body.width >> 1);
 		}
 		
-		override public function set sceneX(value:int):void
+		public function set pivotX(value:Number):void
 		{
 			body.x = value - (body.width >> 1);
 		}
 		
-		override public function get sceneY():int
+		public function get pivotY():Number
 		{
 			return body.y + (body.height >> 1);
 		}
 		
-		override public function set sceneY(value:int):void
+		public function set pivotY(value:Number):void
 		{
 			body.y = value - (body.height >> 1);
 		}
