@@ -1,4 +1,4 @@
-package data.action
+package data.actions
 {
 	/**
 	 *基本动作接口

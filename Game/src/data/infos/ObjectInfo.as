@@ -1,5 +1,7 @@
-package data.info
+package data.infos
 {
+	import renderers.BaseRenderer;
+	
 	import starling.events.EventDispatcher;
 
 	/**
@@ -9,6 +11,15 @@ package data.info
 	 */	
 	public class ObjectInfo extends EventDispatcher
 	{
+		/**
+		 *渲染器 
+		 */		
+		public var myRenderer:BaseRenderer;
+		/**
+		 *渲染器类型 
+		 */		
+		public var rendererClass:Class;
+		
 		public function ObjectInfo()
 		{
 		}

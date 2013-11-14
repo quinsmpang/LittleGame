@@ -1,10 +1,10 @@
-package data.info
+package data.infos
 {
 	import flash.geom.Rectangle;
 	
 	import compoments.Box2D;
 	
-	import data.action.IActionRenderer;
+	import data.actions.IActionRenderer;
 	import data.event.RoleInfoUpdateEvent;
 
 	/**

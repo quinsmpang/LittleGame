@@ -1,4 +1,4 @@
-package data.info
+package data.infos
 {
 	public class RoleInfo extends BaseCharacterInfo
 	{

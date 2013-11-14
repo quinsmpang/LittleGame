@@ -1,6 +1,6 @@
-package data.action
+package data.actions
 {
-	import data.info.BaseCharacterInfo;
+	import data.infos.BaseCharacterInfo;
 	/**
 	 * 左移动
 	 * @author yanjinwei

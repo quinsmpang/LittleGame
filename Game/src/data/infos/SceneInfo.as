@@ -1,4 +1,4 @@
-package data.info
+package data.infos
 {
 	import starling.events.EventDispatcher;
 	/**

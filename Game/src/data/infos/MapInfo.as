@@ -1,4 +1,4 @@
-package data.info
+package data.infos
 {
 	/**
 	 * 地图信息类<br>
