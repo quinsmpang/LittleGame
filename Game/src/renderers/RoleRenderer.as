@@ -9,7 +9,7 @@ package renderers
 	import starling.textures.Texture;
 
 	/**
-	 * 人物渲染器
+	 * 角色渲染器
 	 * @author yanjinwei
 	 * 
 	 */
@@ -17,20 +17,47 @@ package renderers
 	{
 		public var roleImage:Image;
 		
-		public function RoleRenderer(info:RoleInfo)
+		public function RoleRenderer(info:RoleInfo = null)
 		{
 			super();
-			roleInfo = info;
+			if(info)
+			{
+				roleInfo = info;
+			}
 		}
-		
-		override public function renderInfos():void
+		/**
+		 *角色初始化渲染<br> 
+		 * info为空则清空角色渲染器
+		 */		
+		override public function renderInit():void
 		{
-			super.renderInfos();
+			super.renderInit();
 			
-			x = roleInfo.pivotX;
-			y = roleInfo.pivotY;
+			if(roleInfo == null)
+			{
+				clearRenderer();
+			}
+			
+			var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
+			roleImage = new Image(texture);
+			roleImage.pivotX = roleInfo.body.width >> 1;
+			roleImage.pivotY = roleInfo.body.height >> 1;
+			roleImage.x -= roleInfo.body.width << 1;
+			roleImage.y -= roleInfo.body.height << 1;
+			addChild(roleImage);
+		
+			x = roleInfo.x;
+			y = roleInfo.y;
 		}
 		
+		/**
+		 *渲染角色 图层
+		 */		
+		public function renderRole():void
+		{
+			x = roleInfo.x;
+			y = roleInfo.y;
+		}
 		
 		public function get roleInfo():RoleInfo
 		{
@@ -39,29 +66,24 @@ package renderers
 		
 		public function set roleInfo(info:RoleInfo):void
 		{
-			renderInfo = info;
-			initRenderer();
-		}
-		
-		public function initRenderer():void
-		{
-			roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
-			if(roleImage == null)
+			if(roleInfo)
 			{
-				var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
-				roleImage = new Image(texture);
-				roleImage.pivotX = roleInfo.body.width >> 1;
-				roleImage.pivotY = roleInfo.body.height >> 1;
-				roleImage.x -= roleInfo.body.width << 1;
-				roleImage.y -= roleInfo.body.height << 1;
-				addChild(roleImage);
+				roleInfo.removeEventListeners();
 			}
+			
+			renderInfo = info;
+			
+			if(roleInfo)
+			{
+				roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
+			}
+			renderInit();
 		}
 		
 		override public function dispose():void
 		{
 			super.dispose();
-			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
+			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
 		}
 	}
 }

@@ -17,23 +17,38 @@ package renderers
 	{
 		public var mapImage:Image;
 		
-		public function MapRenderer(info:MapInfo)
+		public function MapRenderer(info:MapInfo = null)
 		{
 			super();
-			mapInfo = info;
+			if(info != null)
+			{
+				renderInfo = info;
+			}
 		}
 		
 		/**
-		 *地图初始化的一次渲染
-		 *地图贴图也会重新渲染 
+		 *地图初始化渲染<br>
+		 * info为空则会清空地图渲染器
 		 */		
-		override public function renderInfos():void
+		override public function renderInit():void
 		{
+			if(mapInfo == null)
+			{
+				clearRenderer();
+			}
+			
 			AssetLoader.getloader().maploader(mapInfo.mapID.toString());
 			if(mapImage.parent == null)
 			{
 				addChild(mapImage);
 			}
+			renderChild();
+		}
+		/**
+		 *地图图层update后调用此函数进行渲染 
+		 */		
+		public function renderMapInfo():void
+		{
 			renderChild();
 		}
 		
@@ -44,9 +59,16 @@ package renderers
 			for(var i:int ; i < len ; i ++)
 			{
 				var renderer:BaseRenderer =  new mapInfo.objects[i].rendererClass();
+				renderer.renderInfo =  mapInfo.objects[i];
+				mapInfo.objects[i].myRenderer = renderer;
+				addChild(renderer);
 			}
 		}
-		
+		/**
+		 *地图图层 
+		 * @param info
+		 * 
+		 */		
 		public function set mapInfo(info:MapInfo):void
 		{
 			if(mapInfo == info)
@@ -59,20 +81,25 @@ package renderers
 				mapInfo.removeEventListeners();
 			}
 			
-			mapInfo = info;
+			renderInfo = info;
 			
 			if(mapInfo)
 			{
 				initEvent();
 			}
 			
-			renderInfos();
+			renderInit();
+		}
+		
+		public function get mapInfo():MapInfo
+		{
+			return renderInfo  as MapInfo;
 		}
 		
 		[Inline]
 		final protected function initEvent():void
 		{
-			mapInfo.addEventListener(MapInfoUpdateEvent.UPDATE,renderInfos);
+			mapInfo.addEventListener(MapInfoUpdateEvent.UPDATE,renderChild);
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject
@@ -94,15 +121,13 @@ package renderers
 			return super.removeChild(child, dispose);
 		}
 		
-		
-		public function get mapInfo():MapInfo
+		override public function dispose():void
 		{
-			return renderInfo  as MapInfo;
-		}
-		
-		override public function stop():void
-		{
-			super.stop();
+			super.dispose();
+			if(mapInfo)
+			{
+				mapInfo.removeEventListeners();
+			}
 		}
 		
 	}
