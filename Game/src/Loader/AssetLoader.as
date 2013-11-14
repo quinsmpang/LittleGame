@@ -1,5 +1,6 @@
 package Loader
 {
+	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.net.URLRequest;
@@ -26,7 +27,7 @@ package Loader
 		
 		public function maploader(path:String):Image
 		{
-			var texture:Texture = new Texture();
+			var texture:Texture = Texture.fromBitmapData(new BitmapData(10,10));
 			var image:Image = new Image(texture);
 			_assetManager.enqueue("map\\" + path + ".jpg");
 			_assetManager.loadQueue(onComplete);
@@ -38,7 +39,7 @@ package Loader
 					image.readjustSize();
 				}
 			}
-			return image;
+			return image; 
 		}
 		
 		public function getMap(path:String,callBack:Function):void

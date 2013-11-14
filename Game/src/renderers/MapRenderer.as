@@ -22,7 +22,7 @@ package renderers
 			super();
 			if(info != null)
 			{
-				renderInfo = info;
+				mapInfo = info;
 			}
 		}
 		
@@ -37,7 +37,8 @@ package renderers
 				clearRenderer();
 			}
 			
-			AssetLoader.getloader().maploader(mapInfo.mapID.toString());
+			mapImage = AssetLoader.getloader().maploader(mapInfo.mapID.toString());
+			
 			if(mapImage.parent == null)
 			{
 				addChild(mapImage);
@@ -52,8 +53,7 @@ package renderers
 			renderChild();
 		}
 		
-		[Inline]
-		final protected function renderChild():void
+		protected function renderChild():void
 		{
 			var len:int = mapInfo.objects.length;
 			for(var i:int ; i < len ; i ++)

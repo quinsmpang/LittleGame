@@ -40,10 +40,6 @@ package renderers
 			
 			var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
 			roleImage = new Image(texture);
-			roleImage.pivotX = roleInfo.body.width >> 1;
-			roleImage.pivotY = roleInfo.body.height >> 1;
-			roleImage.x -= roleInfo.body.width << 1;
-			roleImage.y -= roleInfo.body.height << 1;
 			addChild(roleImage);
 		
 			x = roleInfo.x;

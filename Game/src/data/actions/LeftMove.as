@@ -13,8 +13,9 @@ package data.actions
 		 */		
 		public var character:BaseCharacterInfo;
 		
-		public function LeftMove()
+		public function LeftMove(character:BaseCharacterInfo = null)
 		{
+			this.character = character;
 		}
 		
 		public function start():void

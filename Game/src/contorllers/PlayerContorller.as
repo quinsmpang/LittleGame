@@ -1,15 +1,16 @@
 package contorllers
 {
-	import data.infos.RoleInfo;
 	import data.actions.Jump;
 	import data.actions.LeftMove;
 	import data.actions.RightMove;
+	import data.infos.RoleInfo;
 	
 	import starling.core.Starling;
 	import starling.events.KeyboardEvent;
 
 	public class PlayerContorller
 	{
+		public static const SLOTNUM:int = 6;
 		/**
 		 *左移动 
 		 */		
@@ -45,7 +46,7 @@ package contorllers
 		
 		public function PlayerContorller()
 		{
-			keySlot = new Vector.<int>();
+			keySlot = new Vector.<int>(SLOTNUM);
 		}
 		
 		public function setController(role:RoleInfo):void
@@ -64,7 +65,7 @@ package contorllers
 		 * @param keys 快捷键数组
 		 * 
 		 */		
-		public function setKeySlot(keys:Vector.<int>):void
+		public function setKeySlot(keys:Array):void
 		{
 			if(keys.length != keySlot.length)
 			{
@@ -90,22 +91,6 @@ package contorllers
 		{
 			if(e.keyCode == keySlot[LEFTMOVE])
 			{
-				role.doAction(LeftMove);
-			}
-			else if(e.keyCode == keySlot[RIGHTMOVE])
-			{
-				role.doAction(RightMove);
-			}
-			else if(e.keyCode == keySlot[JUMP])
-			{
-				role.doAction(Jump);
-			}
-		}
-		
-		private function onKeyDown(e:KeyboardEvent):void
-		{
-			if(e.keyCode == keySlot[LEFTMOVE])
-			{
 				role.stopAction(LeftMove);
 			}
 			else if(e.keyCode == keySlot[RIGHTMOVE])
@@ -115,6 +100,22 @@ package contorllers
 			else if(e.keyCode == keySlot[JUMP])
 			{
 				role.stopAction(Jump);
+			}
+		}
+		
+		private function onKeyDown(e:KeyboardEvent):void
+		{
+			if(e.keyCode == keySlot[LEFTMOVE])
+			{
+				role.doAction(LeftMove);
+			}
+			else if(e.keyCode == keySlot[RIGHTMOVE])
+			{
+				role.doAction(RightMove);
+			}
+			else if(e.keyCode == keySlot[JUMP])
+			{
+				role.doAction(Jump);
 			}
 		}
 	}

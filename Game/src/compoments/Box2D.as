@@ -19,14 +19,14 @@ package compoments
 		public var body:Rectangle;
 		
 		//物理基本属性
-		public var friction:Number;
-		public var mass:Number;
-		public var vx:Number;
-		public var vy:Number;
-		public var ax:Number;
-		public var ay:Number;
-		public var x:Number;
-		public var y:Number;
+		public var friction:Number = 0;
+		public var mass:Number = 0;
+		public var vx:Number = 0;
+		public var vy:Number = 0;
+		public var ax:Number = 0;
+		public var ay:Number = 0;
+		public var x:Number = 0;
+		public var y:Number = 0;
 		
 		public function Box2D()
 		{

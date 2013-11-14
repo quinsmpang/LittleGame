@@ -3,6 +3,7 @@ package compoments
 	import flash.geom.Rectangle;
 	
 	import starling.animation.IAnimatable;
+	import starling.core.Starling;
 
 	/**
 	 *盒子的世界<br>
@@ -25,6 +26,7 @@ package compoments
 				throw Error("实例化多个单例");
 			}
 			_instance = this;
+			boxs = new Vector.<Box2D>;
 		}
 		/**
 		 *添加盒子 
@@ -89,8 +91,8 @@ package compoments
 						boxs[i].hitTest(boxs[j], hitRectangle);
 						boxs[j].hitTest(boxs[i], hitRectangle);
 					}
-					moveBox(boxs[i]);
 				}
+				moveBox(boxs[i]);
 			}
 		}
 		
@@ -100,7 +102,7 @@ package compoments
 			box.vx += box.ax;
 			box.vy += box.ay;
 			box.x += box.vx;
-			box.y += box.y + box.vy;
+			box.y += box.vy;
 		}
 		
 		public static function getInstance():BoxWorld2D

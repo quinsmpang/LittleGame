@@ -45,6 +45,8 @@ package data.infos
 			if(body == null)
 			{
 				body = new Box2D();
+				body.width = width;
+				body.height = height;
 			}
 			else
 			{
@@ -59,16 +61,17 @@ package data.infos
 		 */		
 		public function doAction(action:Class):void
 		{
-			if(actioning is action)
+			if(action == null)
 			{
-				actioning.stop();
-			}
-			else
-			{
-				actioning.stop();
-				actioning = new action();
+				throw Error("动作为空!");
 			}
 			
+			if(actioning != null)
+			{
+				actioning.stop();
+			}
+			
+			actioning = new action(this);
 			actioning.start();
 		}
 		/**
@@ -115,6 +118,26 @@ package data.infos
 		public function set pivotY(value:Number):void
 		{
 			body.y = value - (body.height >> 1);
+		}
+		
+		override public function get x():Number
+		{
+			return body.x;
+		}
+		
+		override public function set x(value:Number):void
+		{
+			body.x = value;
+		}
+		
+		override public function set y(value:Number):void
+		{
+			body.y = value;
+		}
+		
+		override public function get y():Number
+		{
+			return body.y;
 		}
 	}
 }

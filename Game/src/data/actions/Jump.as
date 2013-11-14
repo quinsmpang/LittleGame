@@ -14,8 +14,9 @@ package data.actions
 		 */		
 		public var character:BaseCharacterInfo;
 		
-		public function Jump()
+		public function Jump(character:BaseCharacterInfo)
 		{
+			this.character = character;
 		}
 		
 		public function start():void

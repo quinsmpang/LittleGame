@@ -24,7 +24,6 @@ package Loader
 			{
 				stage.addEventListener(Event.RESIZE,onResize);
 			}
-			
 		}
 		
 		protected function onResize(event:Event):void
