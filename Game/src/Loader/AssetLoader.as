@@ -5,6 +5,7 @@ package Loader
 	import flash.net.URLRequest;
 	
 	import starling.display.Image;
+	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	
 
@@ -23,8 +24,10 @@ package Loader
 			_assetManager = new AssetManager();
 		}
 		
-		public function maploader(path:String,image:Image):void
+		public function maploader(path:String):Image
 		{
+			var texture:Texture = new Texture();
+			var image:Image = new Image(texture);
 			_assetManager.enqueue("map\\" + path + ".jpg");
 			_assetManager.loadQueue(onComplete);
 			function  onComplete(num:Number):void
@@ -35,6 +38,7 @@ package Loader
 					image.readjustSize();
 				}
 			}
+			return image;
 		}
 		
 		public function getMap(path:String,callBack:Function):void

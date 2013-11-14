@@ -1,9 +1,9 @@
 package Loader
 {
 	
-	import data.info.MapInfo;
+	import data.infos.MapInfo;
 	
-	import renderer.MapRenderer;
+	import renderers.MapRenderer;
 	
 	import starling.display.Sprite;
 	
