@@ -1,15 +1,12 @@
-package renderer
+package renderers
 {
-	import flash.display.BitmapData;
-	
 	import Loader.AssetLoader;
 	
 	import data.event.MapInfoUpdateEvent;
-	import data.info.MapInfo;
+	import data.infos.MapInfo;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.textures.Texture;
 
 	/**
 	 * 地图渲染器
@@ -26,30 +23,56 @@ package renderer
 			mapInfo = info;
 		}
 		
+		/**
+		 *地图初始化的一次渲染
+		 *地图贴图也会重新渲染 
+		 */		
 		override public function renderInfos():void
 		{
-			super.renderInfos();
+			AssetLoader.getloader().maploader(mapInfo.mapID.toString());
 			if(mapImage.parent == null)
 			{
 				addChild(mapImage);
+			}
+			renderChild();
+		}
+		
+		[Inline]
+		final protected function renderChild():void
+		{
+			var len:int = mapInfo.objects.length;
+			for(var i:int ; i < len ; i ++)
+			{
+				var renderer:BaseRenderer =  new mapInfo.objects[i].rendererClass();
 			}
 		}
 		
 		public function set mapInfo(info:MapInfo):void
 		{
+			if(mapInfo == info)
+			{
+				return;
+			}
+			
+			if(mapInfo)
+			{
+				mapInfo.removeEventListeners();
+			}
+			
+			mapInfo = info;
+			
+			if(mapInfo)
+			{
+				initEvent();
+			}
+			
+			renderInfos();
 		}
 		
-		public function initRenderer():void
+		[Inline]
+		final protected function initEvent():void
 		{
 			mapInfo.addEventListener(MapInfoUpdateEvent.UPDATE,renderInfos);
-			
-			if(mapImage == null)
-			{
-				var texture:Texture = Texture.fromBitmapData(new BitmapData(1600,1200));
-				mapImage = new Image(texture);
-			}
-//			mapInfo.cameraMove(MapInfo.HEIGHT >> 2, MapInfo.WIDTH >> 2);
-			AssetLoader.getloader().maploader(mapInfo.mapID.toString(),mapImage);
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject

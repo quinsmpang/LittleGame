@@ -1,4 +1,4 @@
-package renderer
+package renderers
 {
 	import starling.display.DisplayObjectContainer;
 	

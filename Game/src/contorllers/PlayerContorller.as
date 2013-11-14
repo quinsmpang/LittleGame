@@ -1,9 +1,9 @@
-package contorller
+package contorllers
 {
-	import data.info.RoleInfo;
-	import data.action.Jump;
-	import data.action.LeftMove;
-	import data.action.RightMove;
+	import data.infos.RoleInfo;
+	import data.actions.Jump;
+	import data.actions.LeftMove;
+	import data.actions.RightMove;
 	
 	import starling.core.Starling;
 	import starling.events.KeyboardEvent;

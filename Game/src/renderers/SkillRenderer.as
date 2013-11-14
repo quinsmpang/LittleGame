@@ -1,4 +1,4 @@
-package renderer
+package renderers
 {
 	public class SkillRenderer extends BaseRenderer
 	{

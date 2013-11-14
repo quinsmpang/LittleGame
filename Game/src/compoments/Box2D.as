@@ -2,7 +2,7 @@ package compoments
 {
 	import flash.geom.Rectangle;
 	
-	import data.info.hitableObjectInfo;
+	import data.infos.hitableObjectInfo;
 
 	/**
 	 *具有物理属性的一个盒子 

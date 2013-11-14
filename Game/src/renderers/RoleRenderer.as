@@ -1,9 +1,9 @@
-package renderer
+package renderers
 {
 	import flash.display.BitmapData;
 	
-	import data.info.RoleInfo;
 	import data.event.RoleInfoUpdateEvent;
+	import data.infos.RoleInfo;
 	
 	import starling.display.Image;
 	import starling.textures.Texture;
@@ -45,6 +45,7 @@ package renderer
 		
 		public function initRenderer():void
 		{
+			roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
 			if(roleImage == null)
 			{
 				var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
@@ -57,15 +58,10 @@ package renderer
 			}
 		}
 		
-		override public function start():void
+		override public function dispose():void
 		{
-			roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
-		}
-		
-		override public function stop():void
-		{
+			super.dispose();
 			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInfos);
 		}
-		
 	}
 }

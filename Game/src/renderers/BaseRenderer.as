@@ -1,6 +1,6 @@
-package renderer
+package renderers
 {
-	import data.info.hitableObjectInfo;
+	import data.infos.hitableObjectInfo;
 	
 	import starling.display.DisplayObjectContainer;
 
@@ -14,16 +14,6 @@ package renderer
 		}
 		
 		public function renderInfos():void
-		{
-			
-		}
-		
-		public function stop():void
-		{
-			
-		}
-		
-		public function start():void
 		{
 			
 		}
