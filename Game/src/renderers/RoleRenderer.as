@@ -2,10 +2,15 @@ package renderers
 {
 	import flash.display.BitmapData;
 	
+	import compoments.CycleTimer;
+	
 	import data.event.RoleInfoUpdateEvent;
+	import data.infos.ObjectInfo;
 	import data.infos.RoleInfo;
 	
+	import starling.animation.IAnimatable;
 	import starling.display.Image;
+	import starling.events.Event;
 	import starling.textures.Texture;
 
 	/**
@@ -13,7 +18,7 @@ package renderers
 	 * @author yanjinwei
 	 * 
 	 */
-	public class RoleRenderer extends BaseRenderer
+	public class RoleRenderer extends BaseRenderer implements IAnimatable
 	{
 		public var roleImage:Image;
 		
@@ -22,7 +27,7 @@ package renderers
 			super();
 			if(info)
 			{
-				roleInfo = info;
+				renderInfo = info;
 			}
 		}
 		/**
@@ -47,12 +52,20 @@ package renderers
 		}
 		
 		/**
-		 *渲染角色 图层
+		 *渲染角色图层
 		 */		
 		public function renderRole():void
 		{
 			x = roleInfo.x;
 			y = roleInfo.y;
+		}
+		/**
+		 *逐帧渲染 
+		 * @param time
+		 */		
+		public function advanceTime(time:Number):void
+		{
+			renderRole();
 		}
 		
 		public function get roleInfo():RoleInfo
@@ -60,18 +73,28 @@ package renderers
 			return renderInfo as RoleInfo;
 		}
 		
-		public function set roleInfo(info:RoleInfo):void
+		/**
+		 *角色图层 
+		 * @param info
+		 * 
+		 */		
+		override public function set renderInfo(info:ObjectInfo):void
 		{
+			if(roleInfo == info)
+			
 			if(roleInfo)
 			{
 				roleInfo.removeEventListeners();
+				CycleTimer.getInstance().renderJuggler.remove(this);
 			}
 			
-			renderInfo = info;
+			super.renderInfo = info;
 			
 			if(roleInfo)
 			{
 				roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
+				roleInfo.addEventListener(Event.REMOVED_FROM_STAGE,dispose);
+				CycleTimer.getInstance().renderJuggler.add(this);
 			}
 			renderInit();
 		}
@@ -79,7 +102,9 @@ package renderers
 		override public function dispose():void
 		{
 			super.dispose();
-			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
+//			roleInfo.removeEventListener(Event.REMOVED_FROM_STAGE,dispose);
+//			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
+			CycleTimer.getInstance().renderJuggler.remove(this);
 		}
 	}
 }

@@ -3,7 +3,6 @@ package compoments
 	import flash.geom.Rectangle;
 	
 	import starling.animation.IAnimatable;
-	import starling.core.Starling;
 
 	/**
 	 *盒子的世界<br>
@@ -16,6 +15,13 @@ package compoments
 	public class BoxWorld2D implements IAnimatable
 	{
 		private static var _instance:BoxWorld2D;
+		
+		/**
+		 *边界碰撞误差 
+		 */		
+		public static var boundaryHitOffset:Number = 20;
+		
+		public var boundary:Box2D;
 		
 		public var boxs:Vector.<Box2D>;
 		
@@ -61,14 +67,14 @@ package compoments
 		 */		
 		public function start():void
 		{
-			CycleTimer.getInstance().juggler.add(this);
+			CycleTimer.getInstance().physicalJuggler.add(this);
 		}
 		/**
 		 * 停止物理环境的模拟
 		 */		
 		public function stop():void
 		{
-			CycleTimer.getInstance().juggler.remove(this);
+			CycleTimer.getInstance().physicalJuggler.remove(this);
 		}
 		/**
 		 *对world内所有add的盒子进行碰撞检测 
@@ -81,7 +87,7 @@ package compoments
 			{
 				for(var j:int = len -1 ; j > i ; j--)
 				{
-					var hitRectangle:Rectangle = boxs[i].body.intersection(boxs[j]);
+					var hitRectangle:Rectangle = boxs[i].body.intersection(boxs[j].body);
 					if(hitRectangle.height == 0 && hitRectangle.width == 0)
 					{
 						break;
@@ -96,13 +102,24 @@ package compoments
 			}
 		}
 		
-		[Inline]
-		final private function moveBox(box:Box2D):void
+		private function moveBox(box:Box2D):void
 		{
 			box.vx += box.ax;
 			box.vy += box.ay;
 			box.x += box.vx;
 			box.y += box.vy;
+			
+			//越界碰撞测试
+			if(box.x < boundary.x - boundaryHitOffset  
+				|| box.body.right > boundary.body.right + boundaryHitOffset
+			 	|| box.y < boundary.y - boundaryHitOffset 
+				|| box.body.bottom > boundary.body.bottom + boundaryHitOffset)
+			{
+				box.x -= box.vx;
+				box.y -= box.vy;
+				box.vx -= box.ax;
+				box.vy -= box.ay;
+			}
 		}
 		
 		public static function getInstance():BoxWorld2D

@@ -3,6 +3,7 @@ package compoments
 	import starling.animation.DelayedCall;
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
+	import starling.core.Starling;
 
 	/**
 	 *主循环 
@@ -13,7 +14,14 @@ package compoments
 	{
 		private static var _instance:CycleTimer;
 		
-		public var juggler:Juggler;
+		/**
+		 *物理循环 
+		 */		
+		public var physicalJuggler:Juggler;
+		/**
+		 *渲染循环 
+		 */		
+		public var renderJuggler:Juggler;
 		
 		public function CycleTimer()
 		{
@@ -23,7 +31,8 @@ package compoments
 			}
 			
 			_instance = this;
-			juggler = new Juggler();
+			physicalJuggler = new Juggler();
+			renderJuggler = new Juggler();
 		}
 		
 		public static function getInstance():CycleTimer
@@ -36,6 +45,18 @@ package compoments
 			return _instance;
 		}
 		
+		public function start():void
+		{
+			Starling.juggler.add(renderJuggler);
+			Starling.juggler.add(physicalJuggler);
+		}
+		
+		public function stop():void
+		{
+			Starling.juggler.remove(renderJuggler);
+			Starling.juggler.remove(physicalJuggler);
+		}
+		
 		/**
 		 *向juggler 实例中添加一个对象 
 		 * @param object :IAnimatable 实现了IAnimatable接口的对象
@@ -43,7 +64,7 @@ package compoments
 		 */		
 		public function add(object:IAnimatable):void
 		{
-			juggler.add(object);
+			physicalJuggler.add(object);
 		}
 		/**
 		 *在一定的时间内集中处理所有的对象(单位是秒) 
@@ -52,7 +73,7 @@ package compoments
 		 */		
 		public function advanceTime(time:Number):void
 		{
-			juggler.advanceTime(time);
+			physicalJuggler.advanceTime(time);
 		}
 		/**
 		 *在一定的时间间隔之后执行制定的方法，方法会创建一个DelayedCall实例并返回。<br>
@@ -65,7 +86,7 @@ package compoments
 		 */		
 		public function delayCall(call:Function, delay:Number, ...args):DelayedCall
 		{
-			return juggler.delayCall(call,delay, args) 
+			return physicalJuggler.delayCall(call,delay, args) 
 		}
 		/**
 		 *一次性删除所有的对象 
@@ -73,7 +94,7 @@ package compoments
 		 */		
 		public function purge():void
 		{
-			return juggler.purge();
+			return physicalJuggler.purge();
 		}
 		/**
 		 *从juggler 中删除一个对象 
@@ -82,7 +103,7 @@ package compoments
 		 */		
 		public function remove(object:IAnimatable):void
 		{
-			juggler.remove(object);
+			physicalJuggler.remove(object);
 		}
 		/**
 		 *删除一个对象上应用的所有的Tween对象 
@@ -91,7 +112,7 @@ package compoments
 		 */		
 		public function removeTweens(target:Object):void
 		{
-			juggler.removeTweens(target);
+			physicalJuggler.removeTweens(target);
 		}
 	}
 }

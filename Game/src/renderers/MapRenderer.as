@@ -3,10 +3,14 @@ package renderers
 	import Loader.AssetLoader;
 	
 	import data.event.MapInfoUpdateEvent;
+	import data.infos.Camera2D;
 	import data.infos.MapInfo;
+	import data.infos.ObjectInfo;
 	
+	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
+	import starling.events.Event;
 
 	/**
 	 * 地图渲染器
@@ -17,12 +21,18 @@ package renderers
 	{
 		public var mapImage:Image;
 		
+		/**
+		 *相机 
+		 */		
+		public var camera:Camera2D;
 		public function MapRenderer(info:MapInfo = null)
 		{
 			super();
+			camera = new Camera2D();
+			camera.initCamera(0,0,Starling.current.stage.stageWidth,Starling.current.stage.stageHeight);
 			if(info != null)
 			{
-				mapInfo = info;
+				renderInfo = info;
 			}
 		}
 		
@@ -43,33 +53,43 @@ package renderers
 			{
 				addChild(mapImage);
 			}
-			renderChild();
+			renderChilds();
 		}
 		/**
 		 *地图图层update后调用此函数进行渲染 
 		 */		
 		public function renderMapInfo():void
 		{
-			renderChild();
+			renderChilds();
 		}
 		
-		protected function renderChild():void
+		protected function renderChilds():void
 		{
+			removeChildren(1,numChildren);
 			var len:int = mapInfo.objects.length;
-			for(var i:int ; i < len ; i ++)
+			for(var i:int = 0 ; i < len ; i ++)
 			{
-				var renderer:BaseRenderer =  new mapInfo.objects[i].rendererClass();
+				var rendererClass:Class = mapInfo.objects[i].rendererClass;
+				var renderer:BaseRenderer =  new rendererClass(); 
 				renderer.renderInfo =  mapInfo.objects[i];
-				mapInfo.objects[i].myRenderer = renderer;
-				addChild(renderer);
+				super.addChild(renderer);
 			}
+		}
+		
+		protected function renderChild(e:Event):void
+		{
+			var objectInfo:ObjectInfo = e.data as ObjectInfo;
+			var renderer:BaseRenderer = new objectInfo.rendererClass();
+			renderer.renderInfo = objectInfo;
+			super.addChild(renderer);
+			
 		}
 		/**
 		 *地图图层 
 		 * @param info
 		 * 
 		 */		
-		public function set mapInfo(info:MapInfo):void
+		override public function set renderInfo(info:ObjectInfo):void
 		{
 			if(mapInfo == info)
 			{
@@ -78,18 +98,21 @@ package renderers
 			
 			if(mapInfo)
 			{
+				camera.map = null;
 				mapInfo.removeEventListeners();
 			}
 			
-			renderInfo = info;
+			super.renderInfo = info;
 			
 			if(mapInfo)
 			{
+				camera.map = mapInfo;
 				initEvent();
 			}
 			
 			renderInit();
 		}
+		
 		
 		public function get mapInfo():MapInfo
 		{
@@ -99,14 +122,21 @@ package renderers
 		[Inline]
 		final protected function initEvent():void
 		{
-			mapInfo.addEventListener(MapInfoUpdateEvent.UPDATE,renderChild);
+			mapInfo.addEventListener(MapInfoUpdateEvent.LOCATE_UPDATE,renderLocate);
+			mapInfo.addEventListener(MapInfoUpdateEvent.CHILD_UPDATE,renderChild);
+		}
+		
+		private function renderLocate():void
+		{
+			this.x = mapInfo.x;
+			this.y = mapInfo.y;
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			if(child is RoleRenderer)
 			{
-				mapInfo.pushObject( RoleRenderer(child).roleInfo);
+				mapInfo.addObject( RoleRenderer(child).roleInfo);
 			}
 			return super.addChild(child);
 		}
@@ -115,8 +145,7 @@ package renderers
 		{
 			if(child is RoleRenderer)
 			{
-				RoleRenderer(child).roleInfo.camera = null;
-				mapInfo.popObject(RoleRenderer(child).roleInfo);
+				mapInfo.removeObject(RoleRenderer(child).roleInfo);
 			}
 			return super.removeChild(child, dispose);
 		}

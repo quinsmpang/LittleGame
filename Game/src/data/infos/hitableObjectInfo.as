@@ -10,9 +10,12 @@ package data.infos
 	 */	
 	public class hitableObjectInfo extends ObjectInfo
 	{
+		public var body:Box2D;
+		
 		public function hitableObjectInfo()
 		{
 			super();
+			body = new Box2D();
 		}
 		/**
 		 *碰撞回调函数 
@@ -21,7 +24,6 @@ package data.infos
 		 */		
 		public function hitTest(object:Box2D, hitRectangle:Rectangle):void
 		{
-			
 		}
 
 		public function dispose():void

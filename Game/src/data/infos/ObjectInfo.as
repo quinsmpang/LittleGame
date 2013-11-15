@@ -11,14 +11,8 @@ package data.infos
 	 */	
 	public class ObjectInfo extends EventDispatcher
 	{
-		/**
-		 *渲染器 
-		 */		
-		public var myRenderer:BaseRenderer;
-		/**
-		 *渲染器类型 
-		 */		
-		public var rendererClass:Class;
+		private var _x:Number;
+		private var _y:Number;
 		
 		public function ObjectInfo()
 		{
@@ -26,21 +20,30 @@ package data.infos
 		
 		public function get x():Number
 		{
-			return 0;
+			return _x;
 		}
 		
 		public function set x(value:Number):void
 		{
-			
+			_x = value;
 		}
 		
 		public function set y(value:Number):void
 		{
+			_y = value;
 		}
 		
 		public function get y():Number
 		{
-			return 0;
+			return _y;
+		}
+
+		/**
+		 *渲染器类型 
+		 */
+		public function get rendererClass():Class
+		{
+			return BaseRenderer;
 		}
 	}
 }

@@ -25,8 +25,6 @@ package compoments
 		public var vy:Number = 0;
 		public var ax:Number = 0;
 		public var ay:Number = 0;
-		public var x:Number = 0;
-		public var y:Number = 0;
 		
 		public function Box2D()
 		{
@@ -46,6 +44,26 @@ package compoments
 		{
 			_parent = value;
 		}
+		
+		public function get x():Number
+		{
+			return body.x;
+		}
+		
+		public function set x(value:Number):void
+		{
+			body.x = value;
+		}
+		
+		public function get y():Number
+		{
+			return body.y;
+		}
+		
+		public function set y(value:Number):void
+		{
+			body.y = value;
+		}
 
 		public function get width():Number
 		{
@@ -54,7 +72,7 @@ package compoments
 
 		public function set width(value:Number):void
 		{
-			body.setTo(0,0,value,height);
+			body.setTo(x,y,value,height);
 		}
 
 		public function get height():Number
@@ -64,7 +82,7 @@ package compoments
 
 		public function set height(value:Number):void
 		{
-			body.setTo(0,0,width,value);
+			body.setTo(x,y,width,value);
 		}
 		/**
 		 *与其他盒子碰撞时被调用，传入与自身碰撞的盒子与碰撞区域<br>

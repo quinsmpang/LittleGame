@@ -4,7 +4,8 @@ package data.event
 	
 	public class MapInfoUpdateEvent extends Event
 	{
-		public static const UPDATE:String = "update";
+		public static const LOCATE_UPDATE:String = "update";
+		public static const CHILD_UPDATE:String = "childUpdate";
 		
 		public function MapInfoUpdateEvent(type:String, bubbles:Boolean=false, data:Object=null)
 		{

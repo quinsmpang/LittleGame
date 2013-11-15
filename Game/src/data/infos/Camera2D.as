@@ -3,6 +3,8 @@ package data.infos
 	import flash.geom.Rectangle;
 	
 	import compoments.Box2D;
+	import compoments.BoxWorld2D;
+	import compoments.CycleTimer;
 	
 	import starling.animation.IAnimatable;
 
@@ -12,31 +14,28 @@ package data.infos
 	 * 逐帧检查相机状态并移动相机
 	 * @author yanjinwei
 	 */	
-	public class Camera2D extends hitableObjectInfo implements IAnimatable
+	public class Camera2D  implements IAnimatable
 	{
 		/**
 		 * 相机是否可移动
 		 */
 		public var movable:Boolean
 		
-		public var vx:Number;
-		public var vy:Number;
-		/**
-		 *地图渲染器 
-		 */		
-		public var map:MapInfo;
-		/**
-		 *相机区域（参与碰撞计算） 
-		 */		
-		public var region:Box2D;
+		public var vx:Number = 0;
+		public var vy:Number = 0;
+		private var _map:MapInfo;
 		
 		public var leftHasRole:Boolean;
 		public var rightHasRole:Boolean;
 		
+		/**
+		 *相机区域（参与碰撞计算） 
+		 */
+		public var region:Box2D;
+		
 		public function Camera2D()
 		{
 			region = new Box2D();
-			region.parent = this;
 		}
 		/**
 		 *初始化相机<br>
@@ -44,7 +43,6 @@ package data.infos
 		 * @param y 相机y位置
 		 * @param width 相机宽
 		 * @param height 相机高
-		 * @param map 相机所在的地图
 		 */		
 		public function initCamera(x:Number, y:Number, width:Number, height:Number):void
 		{
@@ -65,6 +63,24 @@ package data.infos
 		 */		
 		public function advanceTime(time:Number):void
 		{
+			var len:int;
+			for (var i:int ; i < map.objects.length ; i ++)
+			{
+				if(map.objects[i] is RoleInfo)
+				{
+					var hitRectangle:Rectangle =  region.body.intersection(map.objects[i].body.body);
+					if(hitRectangle.height == 0 && hitRectangle.width == 0)
+					{
+						break;
+					}
+					else
+					{
+						hitTest(map.objects[i].body,hitRectangle);
+					}
+				}
+			}
+			
+			
 			if(movable)
 			{
 				x += vx;
@@ -75,14 +91,20 @@ package data.infos
 			leftHasRole = rightHasRole = false;
 		}
 		
-		override public function hitTest(object:Box2D, hitRectangle:Rectangle):void
+		/**
+		 *相机边界碰撞检测 
+		 * @param object
+		 * @param hitRectangle
+		 * 
+		 */
+		public function hitTest(object:Box2D, hitRectangle:Rectangle):void
 		{
 			if(hitRectangle.width < object.width)
 			{
-				if(hitRectangle.x < x)
+				if(hitRectangle.x == x)
 				{
 					leftHasRole = true;
-					if(vx < 0)
+					if(vx <= 0)
 					{
 						vx = vx < object.vx ? vx : object.vx;
 					}
@@ -91,10 +113,10 @@ package data.infos
 						vx = object.vx;
 					}
 				}
-				else if((hitRectangle.x + hitRectangle.width) > (x + width))
+				else if((hitRectangle.x + hitRectangle.width))
 				{
 					rightHasRole = true;
-					if(vx > 0)
+					if(vx >= 0)
 					{
 						vx = vx > object.vx ? vx : object.vx;
 					}
@@ -115,24 +137,41 @@ package data.infos
 			}
 		}
 		
-		override public function get y():Number
+		public function get y():Number
 		{
 			return region.y;
 		}
 		
-		override public function set y(value:Number):void
+		public function set y(value:Number):void
 		{
+			if(y == value)
+			{
+				return;
+			}
+				
 			region.y = value;
+			if(map != null)
+			{
+				map.moveTo(-x,-y);
+			}
 		}
 		
-		override public function get x():Number
+		public function get x():Number
 		{
 			return region.x;
 		}
 		
-		override public function set x(value:Number):void
+		public function set x(value:Number):void
 		{
+			if(x == value)
+			{
+				return;
+			}
 			region.x = value;
+			if(map != null)
+			{
+				map.moveTo(-x,-y);
+			}
 		}
 
 		public function get pivotX():Number
@@ -175,6 +214,35 @@ package data.infos
 			region.height = value;
 		}
 
+		/**
+		 *地图渲染器 
+		 */
+		public function get map():MapInfo
+		{
+			return _map;
+		}
 
+		/**
+		 * @private
+		 */
+		public function set map(value:MapInfo):void
+		{
+			_map = value;
+			if(map != null)
+			{
+				CycleTimer.getInstance().renderJuggler.add(this);
+				BoxWorld2D.getInstance().boundary = region;
+			}
+			else
+			{
+				CycleTimer.getInstance().renderJuggler.remove(this);
+				BoxWorld2D.getInstance().boundary = null;
+			}
+		}
+		
+		public function dispose():void
+		{
+			CycleTimer.getInstance().renderJuggler.remove(this);
+		}
 	}
 }

@@ -9,7 +9,7 @@ package renderers
 	 */
 	public class BaseRenderer extends DisplayObjectContainer
 	{
-		public var renderInfo:ObjectInfo;
+		private var _renderInfo:ObjectInfo;
 		
 		public function BaseRenderer()
 		{
@@ -29,5 +29,16 @@ package renderers
 		{
 			
 		}
+
+		public function get renderInfo():ObjectInfo
+		{
+			return _renderInfo;
+		}
+
+		public function set renderInfo(value:ObjectInfo):void
+		{
+			_renderInfo = value;
+		}
+
 	}
 }

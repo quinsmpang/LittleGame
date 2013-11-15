@@ -1,5 +1,7 @@
 package data.infos
 {
+	import data.event.MapInfoUpdateEvent;
+
 	/**
 	 * 地图信息类<br>
 	 * 包含背景信息和显示对象信息<br>
@@ -14,22 +16,16 @@ package data.infos
 		private var _height:Number;
 		
 		public var mapID:int;
-		/**
-		 *相机 
-		 */		
-		public var camera:Camera2D;
 		
 		/**
 		 *显示对象列表 
 		 */		
-		public var objects:Vector.<hitableObjectInfo>;
+		public var objects:Vector.<ObjectInfo>;
 		
 		public function MapInfo()
 		{
 			super();
-			objects = new Vector.<hitableObjectInfo>;
-			camera = new Camera2D();
-			camera.map = this;
+			objects = new Vector.<ObjectInfo>;
 		}
 		/**
 		 *初始化地图 
@@ -46,9 +42,10 @@ package data.infos
 		 *加载显示对象
 		 * @param info
 		 */		
-		public function pushObject(info:hitableObjectInfo):void
+		public function addObject(info:hitableObjectInfo):void
 		{
 			objects.push(info);
+			dispatchEvent(new MapInfoUpdateEvent(MapInfoUpdateEvent.CHILD_UPDATE,false,info));
 		}
 		
 		/**
@@ -57,7 +54,7 @@ package data.infos
 		 * @return 
 		 * 
 		 */		
-		public function popObject(info:hitableObjectInfo):Boolean
+		public function removeObject(info:hitableObjectInfo):Boolean
 		{
 			var resultIndex:int;
 			resultIndex = objects.indexOf(info);
@@ -70,6 +67,13 @@ package data.infos
 			{
 				return false;
 			}
+		}
+		
+		public function moveTo(x:Number, y:Number):void
+		{
+			this.x = x;
+			this.y = y;
+			dispatchEvent(new MapInfoUpdateEvent(MapInfoUpdateEvent.LOCATE_UPDATE));
 		}
 		
 		override public function get height():Number

@@ -1,9 +1,5 @@
 package data.infos
 {
-	import flash.geom.Rectangle;
-	
-	import compoments.Box2D;
-	
 	import data.actions.IActionRenderer;
 	import data.event.RoleInfoUpdateEvent;
 
@@ -19,15 +15,11 @@ package data.infos
 		//人物速度
 		public var vx:Number = 0;
 		public var vy:Number = 0;
-		//加载info的相机
-		public var camera:Rectangle;
 		
 		public var hp:int;
 		
 		public var actioning:IActionRenderer;
 		public var isJump:Boolean;
-		
-		public var body:Box2D;
 		
 		public function BaseCharacterInfo()
 		{
@@ -42,17 +34,9 @@ package data.infos
 		 */		
 		public function setBoby(width:Number , height:Number):void
 		{
-			if(body == null)
-			{
-				body = new Box2D();
-				body.width = width;
-				body.height = height;
-			}
-			else
-			{
-				body.width = width;
-				body.height = height;
-			}
+			body.width = width;
+			body.height = height;
+			body.parent = this;
 		}
 		/**
 		 * 执行动作
