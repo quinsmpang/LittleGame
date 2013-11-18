@@ -29,7 +29,7 @@ package Loader
 		{
 			var texture:Texture = Texture.fromBitmapData(new BitmapData(10,10));
 			var image:Image = new Image(texture);
-			_assetManager.enqueue("map\\" + path + ".jpg");
+			_assetManager.enqueue("map\\" + path + ".png");
 			_assetManager.loadQueue(onComplete);
 			function  onComplete(num:Number):void
 			{

@@ -114,7 +114,7 @@ package compoments
 				|| box.body.right > boundary.body.right + boundaryHitOffset
 			 	|| box.y < boundary.y - boundaryHitOffset 
 				|| box.body.bottom > boundary.body.bottom + boundaryHitOffset)
-			{
+			{ 
 				box.x -= box.vx;
 				box.y -= box.vy;
 				box.vx -= box.ax;

@@ -7,7 +7,7 @@ package Loader
 	
 	import starling.core.Starling;
 	
-	[SWF(width="800", height="600", frameRate="60", backgroundColor="#002143")] 
+	[SWF(width="954", height="560", frameRate="60", backgroundColor="#002143")] 
 	public class StartUp extends Sprite
 	{
 		private var myStarling:Starling

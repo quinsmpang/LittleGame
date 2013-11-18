@@ -68,14 +68,14 @@ package data.infos
 			{
 				if(map.objects[i] is RoleInfo)
 				{
-					var hitRectangle:Rectangle =  region.body.intersection(map.objects[i].body.body);
+					var hitRectangle:Rectangle =  region.body.intersection((map.objects[i] as RoleInfo).body.body);
 					if(hitRectangle.height == 0 && hitRectangle.width == 0)
 					{
 						break;
 					}
 					else
 					{
-						hitTest(map.objects[i].body,hitRectangle);
+						hitTest((map.objects[i] as RoleInfo).body,hitRectangle);
 					}
 				}
 			}
