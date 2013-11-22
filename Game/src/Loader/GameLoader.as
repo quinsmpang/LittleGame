@@ -1,8 +1,11 @@
 package Loader
 {
 	
+	import flash.net.URLRequest;
+	
 	import compoments.BoxWorld2D;
 	import compoments.CycleTimer;
+	import compoments.GIFAnimation;
 	
 	import contorllers.PlayerContorller;
 	
@@ -47,6 +50,12 @@ package Loader
 			BoxWorld2D.getInstance().addChild(role2.body);
 			BoxWorld2D.getInstance().start();
 			CycleTimer.getInstance().start();
+			
+			var gif:GIFAnimation = new GIFAnimation(true);
+			gif.height *= 5;
+			gif.width *= 6;	
+			gif.load(new URLRequest("lingmeng.gif"));
+			maprenderer.addChild(gif);
 		}
 	}
 }

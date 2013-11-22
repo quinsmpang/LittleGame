@@ -22,6 +22,7 @@ package Loader
 		
 		public function StartUp()
 		{
+			super();
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			myStage = stage;
