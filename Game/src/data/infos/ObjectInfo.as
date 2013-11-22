@@ -1,5 +1,7 @@
 package data.infos
 {
+	import Loader.StartUp;
+	
 	import renderers.BaseRenderer;
 	
 	import starling.events.EventDispatcher;
@@ -13,6 +15,8 @@ package data.infos
 	{
 		private var _x:Number;
 		private var _y:Number;
+		
+		private var _renderable:Boolean;
 		
 		public function ObjectInfo()
 		{
@@ -45,5 +49,22 @@ package data.infos
 		{
 			return BaseRenderer;
 		}
+
+		public function get renderable():Boolean
+		{
+			return _renderable;
+		}
+
+		public function set renderable(value:Boolean):void
+		{
+			_renderable = value;
+			
+			if(_renderable)
+			{
+				StartUp.myStage.invalidate();
+				_renderable = false;
+			}
+		}
+
 	}
 }

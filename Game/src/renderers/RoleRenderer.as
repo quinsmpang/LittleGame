@@ -1,6 +1,7 @@
 package renderers
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	
 	import compoments.CycleTimer;
 	
@@ -10,7 +11,6 @@ package renderers
 	
 	import starling.animation.IAnimatable;
 	import starling.display.Image;
-	import starling.events.Event;
 	import starling.textures.Texture;
 
 	/**
@@ -102,8 +102,8 @@ package renderers
 		override public function dispose():void
 		{
 			super.dispose();
-//			roleInfo.removeEventListener(Event.REMOVED_FROM_STAGE,dispose);
-//			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
+			roleInfo.removeEventListener(Event.REMOVED_FROM_STAGE,dispose);
+			roleInfo.removeEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
 			CycleTimer.getInstance().renderJuggler.remove(this);
 		}
 	}

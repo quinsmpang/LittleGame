@@ -1,6 +1,7 @@
 package data.infos
 {
 	import data.actions.IActionRenderer;
+	import data.actions.Jump;
 	import data.event.RoleInfoUpdateEvent;
 
 	/**
@@ -19,7 +20,7 @@ package data.infos
 		public var hp:int;
 		
 		public var actioning:IActionRenderer;
-		public var isJump:Boolean;
+//		public var isJump:Boolean;
 		
 		public function BaseCharacterInfo()
 		{
@@ -50,7 +51,7 @@ package data.infos
 				throw Error("动作为空!");
 			}
 			
-			if(actioning != null)
+			if(actioning != null && action != Jump)
 			{
 				actioning.stop();
 			}
@@ -112,6 +113,7 @@ package data.infos
 		override public function set x(value:Number):void
 		{
 			body.x = value;
+			renderable = true;
 		}
 		
 		override public function set y(value:Number):void

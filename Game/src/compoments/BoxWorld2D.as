@@ -21,6 +21,11 @@ package compoments
 		 */		
 		public static var boundaryHitOffset:Number = 20;
 		
+		/**
+		 *重力 
+		 */		
+		public var gravity:Number = 2;
+		
 		public var boundary:Box2D;
 		
 		public var boxs:Vector.<Box2D>;
@@ -105,20 +110,36 @@ package compoments
 		private function moveBox(box:Box2D):void
 		{
 			box.vx += box.ax;
-			box.vy += box.ay;
+			box.vy += box.ay + gravity;
 			box.x += box.vx;
 			box.y += box.vy;
 			
 			//越界碰撞测试
-			if(box.x < boundary.x - boundaryHitOffset  
-				|| box.body.right > boundary.body.right + boundaryHitOffset
-			 	|| box.y < boundary.y - boundaryHitOffset 
-				|| box.body.bottom > boundary.body.bottom + boundaryHitOffset)
-			{ 
+			//左触界
+			if(box.x < boundary.x - boundaryHitOffset)
+			{
 				box.x -= box.vx;
-				box.y -= box.vy;
 				box.vx -= box.ax;
+				box.vx = box.ax = 0;
+			}
+			//右触界
+			if(box.body.right > boundary.body.right + boundaryHitOffset)
+			{
+				box.x -= box.vx;
+				box.vx -= box.ax;
+				box.vx = box.ax = 0;
+			}
+			//下出触界
+			if(box.body.bottom > boundary.body.bottom + boundaryHitOffset)
+			{
+				box.y -= box.vy;
 				box.vy -= box.ay;
+				box.vy = box.ay = 0;
+			}
+			//上触界
+			if(box.y < boundary.y - boundaryHitOffset)
+			{
+				
 			}
 		}
 		

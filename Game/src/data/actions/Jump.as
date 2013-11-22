@@ -21,10 +21,9 @@ package data.actions
 		
 		public function start():void
 		{
-			if(character.isJump == false)
+			if(character != null)
 			{
-				character.body.vy = 10;
-				character.isJump = true;
+				character.body.vy = -30;
 			}
 		}
 		

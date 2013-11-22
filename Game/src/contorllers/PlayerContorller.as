@@ -76,6 +76,10 @@ package contorllers
 				keySlot[i] = keys[i];
 			}
 		}
+		
+		private function registerShortCut():void
+		{
+		}
 		/**
 		 *设置单个按键插槽 
 		 * @param keyType 按键code
