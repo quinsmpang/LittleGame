@@ -1,6 +1,5 @@
 package renderers
 {
-	import flash.display.BitmapData;
 	import flash.events.Event;
 	
 	import compoments.CycleTimer;
@@ -10,8 +9,7 @@ package renderers
 	import data.infos.RoleInfo;
 	
 	import starling.animation.IAnimatable;
-	import starling.display.Image;
-	import starling.textures.Texture;
+	import starling.display.DisplayObjectContainer;
 
 	/**
 	 * 角色渲染器
@@ -20,7 +18,7 @@ package renderers
 	 */
 	public class RoleRenderer extends BaseRenderer implements IAnimatable
 	{
-		public var roleImage:Image;
+		public var action:DisplayObjectContainer;
 		
 		public function RoleRenderer(info:RoleInfo = null)
 		{
@@ -29,10 +27,13 @@ package renderers
 			{
 				renderInfo = info;
 			}
+			action = new DisplayObjectContainer();
+			addChild(action);
 		}
 		/**
 		 *角色初始化渲染<br> 
-		 * info为空则清空角色渲染器
+		 *每次设置info调用<br>
+		 * info为空则清空角色渲染器<br>
 		 */		
 		override public function renderInit():void
 		{
@@ -41,12 +42,12 @@ package renderers
 			if(roleInfo == null)
 			{
 				clearRenderer();
+				return;
 			}
 			
-			var texture:Texture = Texture.fromBitmapData(new BitmapData(roleInfo.body.width,roleInfo.body.height,true,0xff00ffff));
-			roleImage = new Image(texture);
-			addChild(roleImage);
-		
+			action.x = roleInfo.pivotX;
+			action.y = roleInfo.pivotY;
+			
 			x = roleInfo.x;
 			y = roleInfo.y;
 		}

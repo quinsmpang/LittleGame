@@ -9,5 +9,6 @@ package data.actions
 	{
 		function start():void;
 		function stop():void;
+		function render(isPlay:Boolean):void;
 	}
 }

@@ -6,19 +6,14 @@ package data.actions
 	 * @author yanjinwei
 	 * 
 	 */
-	public class RightMove implements IActionRenderer
+	public class RightMove extends BaseAction
 	{
-		/**
-		 *执行动作的人物 
-		 */		
-		public var character:BaseCharacterInfo;
-		
 		public function RightMove(character:BaseCharacterInfo = null)
 		{
 			this.character = character;
 		}
 		
-		public function start():void
+		override public function start():void
 		{
 			if(character != null)
 			{
@@ -26,11 +21,23 @@ package data.actions
 			}
 		}
 		
-		public function stop():void
+		override public function stop():void
 		{
 			if(character != null)
 			{
 				character.body.vx = 0;
+			}
+		}
+		
+		override public function render(isPlay:Boolean):void
+		{
+			if(isPlay)
+			{
+				
+			}
+			else
+			{
+				
 			}
 		}
 	}

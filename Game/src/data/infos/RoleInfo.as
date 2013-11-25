@@ -24,7 +24,5 @@ package data.infos
 		{
 			trace(name + "被打了");
 		}
-		
-		
 	}
 }

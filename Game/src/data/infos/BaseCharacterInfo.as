@@ -85,6 +85,16 @@ package data.infos
 			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE)); 
 		}
 		
+		public function get height():Number
+		{
+			return body.height;
+		}
+		
+		public function get width():Number
+		{
+			return body.width;
+		}
+		
 		public function get pivotX():Number
 		{
 			return body.x + (body.width >> 1);
