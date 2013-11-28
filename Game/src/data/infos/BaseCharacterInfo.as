@@ -1,8 +1,11 @@
 package data.infos
 {
+	import data.actions.BaseAction;
 	import data.actions.IActionRenderer;
 	import data.actions.Jump;
 	import data.event.RoleInfoUpdateEvent;
+	
+	import org.osflash.signals.Signal;
 
 	/**
 	 * 基础人物图层类<br>
@@ -19,8 +22,9 @@ package data.infos
 		
 		public var hp:int;
 		
-		public var actioning:IActionRenderer;
-//		public var isJump:Boolean;
+		public var actioning:BaseAction;
+		
+		private var _actionUpdate:Signal;
 		
 		public function BaseCharacterInfo()
 		{
@@ -56,8 +60,14 @@ package data.infos
 				actioning.stop();
 			}
 			
-			actioning = new action(this);
-			actioning.start();
+			var doAction:BaseAction = new action(this);
+			doAction.start();
+			if(!(actioning is Jump))
+			{
+				actioning = doAction;
+			}
+			
+			this.actionUpdate.dispatch();
 		}
 		/**
 		 *停止动作 
@@ -135,5 +145,16 @@ package data.infos
 		{
 			return body.y;
 		}
+
+		public function get actionUpdate():Signal
+		{
+			if(_actionUpdate == null)
+			{
+				_actionUpdate = new Signal();
+			}
+			
+			return _actionUpdate;
+		}
+
 	}
 }

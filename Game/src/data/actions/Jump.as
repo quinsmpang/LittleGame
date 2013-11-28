@@ -7,19 +7,14 @@ package data.actions
 	 * @author yanjinwei
 	 * 
 	 */	
-	public class Jump implements IActionRenderer
+	public class Jump extends BaseAction
 	{
-		/**
-		 *执行动作的人物 
-		 */		
-		public var character:BaseCharacterInfo;
-		
 		public function Jump(character:BaseCharacterInfo)
 		{
 			this.character = character;
 		}
 		
-		public function start():void
+		override public function start():void
 		{
 			if(character != null)
 			{
@@ -27,7 +22,7 @@ package data.actions
 			}
 		}
 		
-		public function stop():void
+		override public function stop():void
 		{
 		}
 	}

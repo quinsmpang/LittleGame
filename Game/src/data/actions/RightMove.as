@@ -40,5 +40,11 @@ package data.actions
 				
 			}
 		}
+		
+		override public function get gifID():int
+		{
+			return 1000;
+		}
+		
 	}
 }

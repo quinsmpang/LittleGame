@@ -2,14 +2,17 @@ package renderers
 {
 	import flash.events.Event;
 	
+	import Loader.GIFLoader;
+	
 	import compoments.CycleTimer;
+	import compoments.GIFAnimation;
 	
 	import data.event.RoleInfoUpdateEvent;
 	import data.infos.ObjectInfo;
 	import data.infos.RoleInfo;
 	
 	import starling.animation.IAnimatable;
-	import starling.display.DisplayObjectContainer;
+	import starling.display.Sprite;
 
 	/**
 	 * 角色渲染器
@@ -18,7 +21,7 @@ package renderers
 	 */
 	public class RoleRenderer extends BaseRenderer implements IAnimatable
 	{
-		public var action:DisplayObjectContainer;
+		public var action:Sprite;
 		
 		public function RoleRenderer(info:RoleInfo = null)
 		{
@@ -27,7 +30,7 @@ package renderers
 			{
 				renderInfo = info;
 			}
-			action = new DisplayObjectContainer();
+			action = new Sprite();
 			addChild(action);
 		}
 		/**
@@ -86,6 +89,7 @@ package renderers
 			if(roleInfo)
 			{
 				roleInfo.removeEventListeners();
+				roleInfo.actionUpdate.removeAll();
 				CycleTimer.getInstance().renderJuggler.remove(this);
 			}
 			
@@ -95,9 +99,20 @@ package renderers
 			{
 				roleInfo.addEventListener(RoleInfoUpdateEvent.UPDATE,renderInit);
 				roleInfo.addEventListener(Event.REMOVED_FROM_STAGE,dispose);
+				roleInfo.actionUpdate.add(onRenderAction);
 				CycleTimer.getInstance().renderJuggler.add(this);
 			}
 			renderInit();
+		}
+		
+		private function onRenderAction():void
+		{
+			if(roleInfo.actioning)
+			{
+				action.removeChildren(0,action.numChildren);
+				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifID);
+				action.addChild(gif);
+			}
 		}
 		
 		override public function dispose():void
