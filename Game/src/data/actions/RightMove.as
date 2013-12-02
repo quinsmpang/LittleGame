@@ -1,6 +1,7 @@
 package data.actions
 {
 	import data.infos.BaseCharacterInfo;
+	
 	/**
 	 *右移动 
 	 * @author yanjinwei
@@ -10,7 +11,7 @@ package data.actions
 	{
 		public function RightMove(character:BaseCharacterInfo = null)
 		{
-			this.character = character;
+			super(character);
 		}
 		
 		override public function start():void

@@ -28,5 +28,16 @@ package data.actions
 				character.body.vx = 0;
 			}
 		}
+		
+		override public function get gifID():int
+		{
+			return 1001;
+		}
+		
+		override public function render(isPlay:Boolean):void
+		{
+			super.render(isPlay);
+		}
+		
 	}
 }
