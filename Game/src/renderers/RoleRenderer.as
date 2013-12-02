@@ -12,7 +12,9 @@ package renderers
 	import data.infos.RoleInfo;
 	
 	import starling.animation.IAnimatable;
+	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.textures.Texture;
 
 	/**
 	 * 角色渲染器
@@ -49,8 +51,8 @@ package renderers
 				return;
 			}
 			
-			action.x = roleInfo.pivotX;
-			action.y = roleInfo.pivotY;
+//			var testBody:Image = new Image(Texture.fromColor(roleInfo.width,roleInfo.height));
+//			addChild(testBody);
 			
 			x = roleInfo.x;
 			y = roleInfo.y;
@@ -116,8 +118,12 @@ package renderers
 					currentGIFAction.stop();
 				}
 				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifID);
-				gif.height *= 3;
-				gif.width *= 3;
+				gif.pivotX = 36;
+				gif.pivotY = 47;
+				gif.x = (roleInfo.width >> 1) - gif.pivotX;
+				gif.y = (roleInfo.height >> 1) - gif.pivotY;
+				gif.scaleX = 2;
+				gif.scaleY = 2;
 				action.addChild(gif);
 				currentGIFAction = gif;
 			}

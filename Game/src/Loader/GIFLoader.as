@@ -1,5 +1,6 @@
 package Loader
 {
+	import flash.geom.Point;
 	import flash.net.URLRequest;
 	
 	import compoments.GIFAnimation;

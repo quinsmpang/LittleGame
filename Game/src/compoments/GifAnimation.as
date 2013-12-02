@@ -21,7 +21,6 @@ package compoments
 	{
 		private var _gifPlayer:GIFPlayer;
 		private var _defalutSize:Number = 64;
-		
 		private var _complete:Signal;
 		
 		public function GIFAnimation(pAutoPlay:Boolean = false)
@@ -53,6 +52,8 @@ package compoments
 			if(_gifPlayer.bitmapData != null)
 			{
 				texture = Texture.fromBitmapData(_gifPlayer.bitmapData);
+				readjustSize();
+//				trace(this.x,this.y);
 			}
 		}
 		

@@ -1,7 +1,6 @@
 package data.infos
 {
 	import data.actions.BaseAction;
-	import data.actions.IActionRenderer;
 	import data.actions.Jump;
 	import data.event.RoleInfoUpdateEvent;
 	
@@ -55,6 +54,11 @@ package data.infos
 				throw Error("动作为空!");
 			}
 			
+			if(actioning is action)
+			{
+				return;
+			}
+			
 			if(actioning != null && action != Jump)
 			{
 				actioning.stop();
@@ -90,8 +94,8 @@ package data.infos
 		 */		
 		public function setScenePos(posx:Number,posy:Number):void
 		{
-			pivotX = posx;
-			pivotY = posy;
+			centerX = posx;
+			centerY = posy;
 			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE)); 
 		}
 		
@@ -105,22 +109,22 @@ package data.infos
 			return body.width;
 		}
 		
-		public function get pivotX():Number
+		public function get centerX():Number
 		{
 			return body.x + (body.width >> 1);
 		}
 		
-		public function set pivotX(value:Number):void
+		public function set centerX(value:Number):void
 		{
 			body.x = value - (body.width >> 1);
 		}
 		
-		public function get pivotY():Number
+		public function get centerY():Number
 		{
 			return body.y + (body.height >> 1);
 		}
 		
-		public function set pivotY(value:Number):void
+		public function set centerY(value:Number):void
 		{
 			body.y = value - (body.height >> 1);
 		}
