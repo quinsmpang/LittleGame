@@ -22,6 +22,7 @@ package renderers
 	public class RoleRenderer extends BaseRenderer implements IAnimatable
 	{
 		public var action:Sprite;
+		private var currentGIFAction:GIFAnimation;
 		
 		public function RoleRenderer(info:RoleInfo = null)
 		{
@@ -109,9 +110,16 @@ package renderers
 		{
 			if(roleInfo.actioning)
 			{
-				action.removeChildren(0,action.numChildren);
+				if(currentGIFAction != null)
+				{
+					action.removeChild(currentGIFAction);
+					currentGIFAction.stop();
+				}
 				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifID);
+				gif.height *= 3;
+				gif.width *= 3;
 				action.addChild(gif);
+				currentGIFAction = gif;
 			}
 		}
 		
