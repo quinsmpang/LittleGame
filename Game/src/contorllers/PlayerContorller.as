@@ -3,6 +3,7 @@ package contorllers
 	import data.actions.Jump;
 	import data.actions.LeftMove;
 	import data.actions.RightMove;
+	import data.actions.Wait;
 	import data.infos.RoleInfo;
 	
 	import starling.core.Starling;
@@ -105,6 +106,8 @@ package contorllers
 			{
 				role.stopAction(Jump);
 			}
+			
+			role.doAction(Wait);
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void
