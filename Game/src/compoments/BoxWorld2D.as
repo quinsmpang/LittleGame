@@ -130,7 +130,7 @@ package compoments
 				box.vx = box.ax = 0;
 			}
 			//下出触界
-			if(box.body.bottom > boundary.body.bottom + boundaryHitOffset)
+			if(box.body.bottom > boundary.body.bottom)
 			{
 				box.y -= box.vy;
 				box.vy -= box.ay;

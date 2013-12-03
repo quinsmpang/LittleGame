@@ -52,7 +52,7 @@ package renderers
 			}
 			
 //			var testBody:Image = new Image(Texture.fromColor(roleInfo.width,roleInfo.height));
-//			addChild(testBody);
+//			addChildAt(testBody,0);
 			
 			x = roleInfo.x;
 			y = roleInfo.y;
@@ -118,10 +118,10 @@ package renderers
 					currentGIFAction.stop();
 				}
 				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifID);
-				gif.pivotX = 36;
-				gif.pivotY = 47;
-				gif.x = (roleInfo.width >> 1) - gif.pivotX;
-				gif.y = (roleInfo.height >> 1) - gif.pivotY;
+				gif.pivotX = 34;
+				gif.pivotY = 49;
+				gif.x = (roleInfo.width >> 1);
+				gif.y = (roleInfo.height >> 1);
 				gif.scaleX = 2;
 				gif.scaleY = 2;
 				action.addChild(gif);
