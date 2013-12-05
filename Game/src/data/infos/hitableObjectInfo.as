@@ -25,6 +25,11 @@ package data.infos
 		public function hitTest(object:Box2D, hitRectangle:Rectangle):void
 		{
 		}
+		
+		public function hitBoundary(place:int):void
+		{
+			
+		}
 
 		public function dispose():void
 		{

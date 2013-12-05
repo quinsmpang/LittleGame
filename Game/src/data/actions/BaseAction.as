@@ -31,9 +31,9 @@ package data.actions
 		{
 		}
 		
-		public function get gifID():int
+		public function get gifActionInfo():GIFActionInfo
 		{
-			return 0;
+			return null;
 		}
 	}
 }

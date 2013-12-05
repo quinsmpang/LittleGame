@@ -97,5 +97,13 @@ package compoments
 				parent.hitTest(object, hitRectangle);
 			}
 		}
+		
+		public function hitBoundary(place:int):void
+		{
+			if(parent)
+			{
+				parent.hitBoundary(place);
+			}
+		}
 	}
 }

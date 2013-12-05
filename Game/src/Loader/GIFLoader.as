@@ -1,6 +1,5 @@
 package Loader
 {
-	import flash.geom.Point;
 	import flash.net.URLRequest;
 	
 	import compoments.GIFAnimation;
@@ -86,7 +85,6 @@ package Loader
 			}
 			else
 			{
-				
 			}
 			
 			if(queue.length)

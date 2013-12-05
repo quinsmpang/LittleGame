@@ -14,12 +14,17 @@ package compoments
 	 */	
 	public class BoxWorld2D implements IAnimatable
 	{
+		public static const UP:int = 0;
+		public static const BOTTOM:int = 1;
+		public static const LEFT:int = 2;
+		public static const RIGHT:int = 3;
+		
 		private static var _instance:BoxWorld2D;
 		
 		/**
 		 *边界碰撞误差 
 		 */		
-		public static var boundaryHitOffset:Number = 20;
+		public static var boundaryHitOffset:Number = 0;
 		
 		/**
 		 *重力 
@@ -121,6 +126,7 @@ package compoments
 				box.x -= box.vx;
 				box.vx -= box.ax;
 				box.vx = box.ax = 0;
+				box.hitBoundary(LEFT);
 			}
 			//右触界
 			if(box.body.right > boundary.body.right + boundaryHitOffset)
@@ -128,18 +134,20 @@ package compoments
 				box.x -= box.vx;
 				box.vx -= box.ax;
 				box.vx = box.ax = 0;
+				box.hitBoundary(RIGHT);
 			}
-			//下出触界
-			if(box.body.bottom > boundary.body.bottom)
+			//下触界
+			if(box.body.bottom > boundary.body.bottom + boundaryHitOffset)
 			{
 				box.y -= box.vy;
 				box.vy -= box.ay;
 				box.vy = box.ay = 0;
+				box.hitBoundary(BOTTOM);
 			}
 			//上触界
 			if(box.y < boundary.y - boundaryHitOffset)
 			{
-				
+				box.hitBoundary(UP);
 			}
 		}
 		

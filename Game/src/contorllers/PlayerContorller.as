@@ -107,7 +107,14 @@ package contorllers
 				role.stopAction(Jump);
 			}
 			
-			role.doAction(Wait);
+			if(role.isJump)
+			{
+				
+			}
+			else
+			{
+				role.doAction(Wait);
+			}
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void

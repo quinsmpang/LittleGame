@@ -1,6 +1,9 @@
 package data.actions
 {
+	import flash.geom.Point;
+	
 	import data.infos.BaseCharacterInfo;
+
 	/**
 	 * 左移动
 	 * @author yanjinwei
@@ -29,9 +32,12 @@ package data.actions
 			}
 		}
 		
-		override public function get gifID():int
+		override public function get gifActionInfo():GIFActionInfo
 		{
-			return 1001;
+			var info:GIFActionInfo = new GIFActionInfo();
+			info.gifID = 1001;
+			info.center = new Point(24,50);
+			return info;
 		}
 		
 		override public function render(isPlay:Boolean):void

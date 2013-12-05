@@ -1,5 +1,7 @@
 package data.actions
 {
+	import flash.geom.Point;
+	
 	import data.infos.BaseCharacterInfo;
 	
 	/**
@@ -42,10 +44,14 @@ package data.actions
 			}
 		}
 		
-		override public function get gifID():int
+		override public function get gifActionInfo():GIFActionInfo
 		{
-			return 1000;
+			var info:GIFActionInfo = new GIFActionInfo();
+			info.gifID = 1000;
+			info.center = new Point(29,61);
+			return info;
 		}
+		
 		
 	}
 }

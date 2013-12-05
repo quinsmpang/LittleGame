@@ -1,7 +1,8 @@
 package data.infos
 {
+	import compoments.BoxWorld2D;
+	
 	import data.actions.BaseAction;
-	import data.actions.Jump;
 	import data.event.RoleInfoUpdateEvent;
 	
 	import org.osflash.signals.Signal;
@@ -20,6 +21,8 @@ package data.infos
 		public var vy:Number = 0;
 		
 		public var hp:int;
+		
+		private var _isJump:Boolean;
 		
 		public var actioning:BaseAction;
 		
@@ -59,17 +62,14 @@ package data.infos
 				return;
 			}
 			
-			if(actioning != null && action != Jump)
+			if(actioning != null && isJump)
 			{
 				actioning.stop();
 			}
 			
-			var doAction:BaseAction = new action(this);
-			doAction.start();
-			if(!(actioning is Jump))
-			{
-				actioning = doAction;
-			}
+			actioning = new action(this);
+			
+			actioning.start();
 			
 			this.actionUpdate.dispatch();
 		}
@@ -97,6 +97,14 @@ package data.infos
 			centerX = posx;
 			centerY = posy;
 			dispatchEvent(new RoleInfoUpdateEvent(RoleInfoUpdateEvent.UPDATE)); 
+		}
+		
+		override public function hitBoundary(place:int):void
+		{
+			if(place == BoxWorld2D.BOTTOM)
+			{
+				isJump = false;
+			}
 		}
 		
 		public function get height():Number
@@ -160,5 +168,24 @@ package data.infos
 			return _actionUpdate;
 		}
 
+		public function get isJump():Boolean
+		{
+			return _isJump;
+		}
+
+		public function set isJump(value:Boolean):void
+		{
+			if(_isJump == value)
+			{
+				return;
+			}
+			
+			_isJump = value;
+			
+			if(_isJump == false)
+			{
+				
+			}
+		}
 	}
 }

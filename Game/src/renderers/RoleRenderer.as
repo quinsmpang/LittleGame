@@ -117,9 +117,9 @@ package renderers
 					action.removeChild(currentGIFAction);
 					currentGIFAction.stop();
 				}
-				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifID);
-				gif.pivotX = 34;
-				gif.pivotY = 49;
+				var gif:GIFAnimation = GIFLoader.instance.load(roleInfo.actioning.gifActionInfo.gifID);
+				gif.pivotX = roleInfo.actioning.gifActionInfo.center.x;
+				gif.pivotY = roleInfo.actioning.gifActionInfo.center.y;
 				gif.x = (roleInfo.width >> 1);
 				gif.y = (roleInfo.height >> 1);
 				gif.scaleX = 2;
