@@ -4,7 +4,7 @@ package Loader
 	import compoments.BoxWorld2D;
 	import compoments.CycleTimer;
 	
-	import contorllers.PlayerContorller;
+	import contorllers.KeyboardPad;
 	
 	import data.constType.KeyType;
 	import data.infos.MapInfo;
@@ -36,10 +36,10 @@ package Loader
 			role2.setBoby(120,196);
 			mapinfo.addObject(role2);
 			
-			var player1:PlayerContorller = new PlayerContorller();
+			var player1:KeyboardPad = new KeyboardPad();
 //			player1.setController(role1);
 			player1.setKeySlot([KeyType.A, KeyType.D, KeyType.W, KeyType.D, KeyType.J, KeyType.K]);
-			var player2:PlayerContorller = new PlayerContorller();
+			var player2:KeyboardPad = new KeyboardPad();
 			player2.setController(role2);
 			player2.setKeySlot([KeyType.LEFT, KeyType.RIGHT, KeyType.UP, KeyType.DOWN , KeyType.KEY1, KeyType.KEY2]);
 			

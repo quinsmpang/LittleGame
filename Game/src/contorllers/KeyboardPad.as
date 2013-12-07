@@ -1,15 +1,19 @@
 package contorllers
 {
-	import data.actions.Jump;
-	import data.actions.LeftMove;
-	import data.actions.RightMove;
-	import data.actions.Wait;
+	import compoments.CycleTimer;
+	
+	import data.infos.BaseCharacterInfo;
 	import data.infos.RoleInfo;
 	
-	import starling.core.Starling;
-	import starling.events.KeyboardEvent;
+	import starling.animation.IAnimatable;
 
-	public class PlayerContorller
+	/**
+	 *键盘手柄<br>
+	 * 负责侦听键盘事件并设置baseCharacterInfo的状态 
+	 * @author Administrator
+	 * 
+	 */	
+	public class KeyboardPad extends Pad implements IAnimatable
 	{
 		public static const SLOTNUM:int = 6;
 		/**
@@ -45,22 +49,33 @@ package contorllers
 		 */		
 		public var role:RoleInfo;
 		
-		public function PlayerContorller()
+		public function KeyboardPad()
 		{
 			keySlot = new Vector.<int>(SLOTNUM);
 		}
 		
-		public function setController(role:RoleInfo):void
+		override public function addObject(info:BaseCharacterInfo):void
 		{
-			this.role = role;
-			initkey();
+			const lengthBefore:int = objectInfos.length;
+			
+			super.addObject(info);
+			
+			if(lengthBefore == 0)
+			{
+				CycleTimer.getInstance().renderJuggler.add(this);
+			}
 		}
 		
-		private function initkey():void
+		override public function removeObject(info:BaseCharacterInfo):void
 		{
-			Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			super.removeObject(info);
+			
+			if(objectInfos.length == 0)
+			{
+				CycleTimer.getInstance().remove(this);
+			}
 		}
+		
 		/**
 		 *初始化插槽 
 		 * @param keys 快捷键数组
@@ -78,9 +93,6 @@ package contorllers
 			}
 		}
 		
-		private function registerShortCut():void
-		{
-		}
 		/**
 		 *设置单个按键插槽 
 		 * @param keyType 按键code
@@ -92,45 +104,9 @@ package contorllers
 			keySlot[slot] = keyType;
 		}
 		
-		private function onKeyUp(e:KeyboardEvent):void
+		public function advanceTime(time:Number):void
 		{
-			if(e.keyCode == keySlot[LEFTMOVE])
-			{
-				role.stopAction(LeftMove);
-			}
-			else if(e.keyCode == keySlot[RIGHTMOVE])
-			{
-				role.stopAction(RightMove);
-			}
-			else if(e.keyCode == keySlot[JUMP])
-			{
-				role.stopAction(Jump);
-			}
 			
-			if(role.isJump)
-			{
-				
-			}
-			else
-			{
-				role.doAction(Wait);
-			}
-		}
-		
-		private function onKeyDown(e:KeyboardEvent):void
-		{
-			if(e.keyCode == keySlot[LEFTMOVE])
-			{
-				role.doAction(LeftMove);
-			}
-			else if(e.keyCode == keySlot[RIGHTMOVE])
-			{
-				role.doAction(RightMove);
-			}
-			else if(e.keyCode == keySlot[JUMP])
-			{
-				role.doAction(Jump);
-			}
 		}
 	}
 }
